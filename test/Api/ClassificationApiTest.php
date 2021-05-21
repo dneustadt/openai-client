@@ -72,7 +72,7 @@ class ClassificationApiTest extends TestCase
     }
 
     /**
-     * Test case for postClarification
+     * Test case for postClassification
      *
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint..
      *

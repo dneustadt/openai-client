@@ -50,7 +50,7 @@ All URIs are relative to *https://api.openai.com/v1*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AnswerApi* | [**postAnswer**](docs/Api/AnswerApi.md#postanswer) | **POST** /answers | Answers the specified question using the provided documents and examples.
-*ClassificationApi* | [**postClarification**](docs/Api/ClassificationApi.md#postclarification) | **POST** /classifications | The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
+*ClassificationApi* | [**postClassification**](docs/Api/ClassificationApi.md#postclarification) | **POST** /classifications | The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
 *CompletionsApi* | [**postCompletions**](docs/Api/CompletionsApi.md#postcompletions) | **POST** /engines/{engine_id}/completions | Creates a new completion for the provided prompt and parameters
 *EnginesApi* | [**getEngineById**](docs/Api/EnginesApi.md#getenginebyid) | **GET** /engines/{engine_id} | Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
 *EnginesApi* | [**getEngines**](docs/Api/EnginesApi.md#getengines) | **GET** /engines | Lists the currently available engines, and provides basic information about each one such as the owner and availability.

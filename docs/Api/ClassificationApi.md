@@ -4,13 +4,13 @@ All URIs are relative to https://api.openai.com/v1.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**postClarification()**](ClassificationApi.md#postClarification) | **POST** /classifications | The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
+[**postClassification()**](ClassificationApi.md#postClassification) | **POST** /classifications | The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
 
 
-## `postClarification()`
+## `postClassification()`
 
 ```php
-postClarification($open_ai_organization, $classification_payload): \OpenAPI\Client\Model\Classification
+postClassification($open_ai_organization, $classification_payload): \OpenAPI\Client\Model\Classification
 ```
 
 The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
@@ -38,10 +38,10 @@ $open_ai_organization = 'open_ai_organization_example'; // string
 $classification_payload = new \OpenAPI\Client\Model\ClassificationPayload(); // \OpenAPI\Client\Model\ClassificationPayload
 
 try {
-    $result = $apiInstance->postClarification($open_ai_organization, $classification_payload);
+    $result = $apiInstance->postClassification($open_ai_organization, $classification_payload);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ClassificationApi->postClarification: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ClassificationApi->postClassification: ', $e->getMessage(), PHP_EOL;
 }
 ```
 

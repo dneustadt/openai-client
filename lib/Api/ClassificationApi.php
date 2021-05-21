@@ -115,7 +115,7 @@ class ClassificationApi
     }
 
     /**
-     * Operation postClarification
+     * Operation postClassification
      *
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
@@ -126,14 +126,14 @@ class ClassificationApi
      * @throws \InvalidArgumentException
      * @return \OpenAPI\Client\Model\Classification
      */
-    public function postClarification($open_ai_organization = null, $classification_payload = null)
+    public function postClassification($open_ai_organization = null, $classification_payload = null)
     {
-        list($response) = $this->postClarificationWithHttpInfo($open_ai_organization, $classification_payload);
+        list($response) = $this->postClassificationWithHttpInfo($open_ai_organization, $classification_payload);
         return $response;
     }
 
     /**
-     * Operation postClarificationWithHttpInfo
+     * Operation postClassificationWithHttpInfo
      *
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
@@ -144,9 +144,9 @@ class ClassificationApi
      * @throws \InvalidArgumentException
      * @return array of \OpenAPI\Client\Model\Classification, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postClarificationWithHttpInfo($open_ai_organization = null, $classification_payload = null)
+    public function postClassificationWithHttpInfo($open_ai_organization = null, $classification_payload = null)
     {
-        $request = $this->postClarificationRequest($open_ai_organization, $classification_payload);
+        $request = $this->postClassificationRequest($open_ai_organization, $classification_payload);
 
         try {
             $options = $this->createHttpClientOption();
@@ -220,7 +220,7 @@ class ClassificationApi
     }
 
     /**
-     * Operation postClarificationAsync
+     * Operation postClassificationAsync
      *
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
@@ -230,9 +230,9 @@ class ClassificationApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postClarificationAsync($open_ai_organization = null, $classification_payload = null)
+    public function postClassificationAsync($open_ai_organization = null, $classification_payload = null)
     {
-        return $this->postClarificationAsyncWithHttpInfo($open_ai_organization, $classification_payload)
+        return $this->postClassificationAsyncWithHttpInfo($open_ai_organization, $classification_payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -241,7 +241,7 @@ class ClassificationApi
     }
 
     /**
-     * Operation postClarificationAsyncWithHttpInfo
+     * Operation postClassificationAsyncWithHttpInfo
      *
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
@@ -251,10 +251,10 @@ class ClassificationApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postClarificationAsyncWithHttpInfo($open_ai_organization = null, $classification_payload = null)
+    public function postClassificationAsyncWithHttpInfo($open_ai_organization = null, $classification_payload = null)
     {
         $returnType = '\OpenAPI\Client\Model\Classification';
-        $request = $this->postClarificationRequest($open_ai_organization, $classification_payload);
+        $request = $this->postClassificationRequest($open_ai_organization, $classification_payload);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -290,7 +290,7 @@ class ClassificationApi
     }
 
     /**
-     * Create request for operation 'postClarification'
+     * Create request for operation 'postClassification'
      *
      * @param  string $open_ai_organization (optional)
      * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload (optional)
@@ -298,7 +298,7 @@ class ClassificationApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postClarificationRequest($open_ai_organization = null, $classification_payload = null)
+    public function postClassificationRequest($open_ai_organization = null, $classification_payload = null)
     {
 
         $resourcePath = '/classifications';
