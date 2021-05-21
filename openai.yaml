@@ -1,0 +1,598 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api.openai.com/v1'
+info:
+  description: >-
+    OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general intelligence benefits all of humanity.
+  version: 1.0.0
+  title: OpenAI API
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+tags:
+  - name: OpenAI
+    description: OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general intelligence benefits all of humanity.
+paths:
+  /engines:
+    get:
+      tags:
+        - engines
+      summary: Lists the currently available engines, and provides basic information about each one such as the owner and availability.
+      description: ''
+      operationId: getEngines
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Engine'
+      security:
+        - api_key: []
+  '/engines/{engine_id}':
+    get:
+      tags:
+        - engines
+      summary: Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
+      description: ''
+      operationId: getEngineById
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: engine_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: The ID of the engine to use for this request
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Engine'
+      security:
+        - api_key: []
+  '/engines/{engine_id}/completions':
+    post:
+      tags:
+        - completions
+      summary: Creates a new completion for the provided prompt and parameters
+      description: ''
+      operationId: postCompletions
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: engine_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: The ID of the engine to use for this request
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Completion'
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: CompletionPayload
+              type: object
+              properties:
+                prompt:
+                  description: The prompt(s) to generate completions for, encoded as a string, a list of strings, or a list of token lists.
+                  required: true
+                  oneOf:
+                    - type: string
+                    - type: array
+                max_tokens:
+                  description: The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion.
+                  type: integer
+                  default: 16
+                temperature:
+                  description: The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion.
+                  type: number
+                  default: 1
+                top_p:
+                  description: An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.
+                  type: number
+                  default: 1
+                n:
+                  description: How many completions to generate for each prompt.
+                  type: integer
+                  default: 1
+                stream:
+                  description: 'Whether to stream back partial progress. If set, tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message.'
+                  type: boolean
+                  default: false
+                logprobs:
+                  description: Include the log probabilities on the logprobs most likely tokens, as well the chosen tokens.
+                  type: integer
+                  default: null
+                echo:
+                  description: Echo back the prompt in addition to the completion.
+                  type: boolean
+                  default: false
+                stop:
+                  description: Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+                  oneOf:
+                    - type: string
+                    - type: array
+                  default: null
+                presence_penalty:
+                  description: Number between 0 and 1 that penalizes new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
+                  type: number
+                  default: 0
+                frequency_penalty:
+                  description: Number between 0 and 1 that penalizes new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim.
+                  type: number
+                  default: 0
+                best_of:
+                  description: Generates best_of completions server-side and returns the "best" (the one with the lowest log probability per token). Results cannot be streamed.
+                  type: integer
+                  default: 1
+                logit_bias:
+                  description: Modify the likelihood of specified tokens appearing in the completion.
+                  type: object
+                  default: null
+  '/engines/{engine_id}/search':
+    post:
+      tags:
+        - search
+      summary: The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+      description: ''
+      operationId: postSearch
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: engine_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: The ID of the engine to use for this request
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: SearchPayload
+              type: object
+              properties:
+                documents:
+                  description: The prompt(s) to generate completions for, encoded as a string, a list of strings, or a list of token lists.
+                  type: array
+                file:
+                  description: The ID of an uploaded file that contains documents to search over. You should specify either documents or a file, but not both.
+                  type: string
+                query:
+                  description: Query to search against the documents.
+                  required: true
+                  type: string
+                max_rerank:
+                  description: The maximum number of documents to be re-ranked and returned by search.
+                  type: integer
+                  default: 200
+                return_metadata:
+                  description: A special boolean flag for showing metadata. If set to true, each document entry in the returned JSON will contain a "metadata" field. This flag only takes effect when file is set.
+                  type: boolean
+                  default: false
+  /classifications:
+    post:
+      tags:
+        - classification
+      summary: The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
+      description: ''
+      operationId: postClarification
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Classification'
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: ClassificationPayload
+              type: object
+              properties:
+                model:
+                  description: ID of the engine to use for completion.
+                  required: true
+                  type: string
+                query:
+                  description: Query to be classified.
+                  required: true
+                  type: string
+                examples:
+                  description: A list of examples with labels.
+                  type: array
+                file:
+                  description: The ID of the uploaded file that contains training examples. See upload file for how to upload a file of the desired format and purpose.
+                  type: string
+                labels:
+                  description: The set of categories being classified. If not specified, candidate labels will be automatically collected from the examples you provide. All the label strings will be normalized to be capitalized.
+                  type: array
+                  default: null
+                search_model:
+                  description: ID of the engine to use for Search.
+                  type: string
+                  default: 'ada'
+                temperature:
+                  description: What sampling temperature to use. Higher values mean the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.
+                  type: number
+                  default: 0
+                logprobs:
+                  description: Include the log probabilities on the logprobs most likely tokens, as well the chosen tokens.
+                  type: integer
+                  default: 0
+                max_examples:
+                  description: The maximum number of examples to be ranked by Search when using file. Setting it to a higher value leads to improved accuracy but with increased latency and cost.
+                  type: integer
+                  default: 200
+                logit_bias:
+                  description: Modify the likelihood of specified tokens appearing in the completion.
+                  type: object
+                  default: null
+                return_prompt:
+                  description: If set to true, the returned JSON will include a "prompt" field containing the final prompt that was used to request a completion. This is mainly useful for debugging purposes.
+                  type: boolean
+                  default: false
+                return_metadata:
+                  description: A special boolean flag for showing metadata. If set to true, each document entry in the returned JSON will contain a "metadata" field.
+                  type: boolean
+                  default: false
+                expand:
+                  description: If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object ID. Currently we support completion and file objects for expansion.
+                  type: array
+                  default: []
+  /answers:
+    post:
+      tags:
+        - answer
+      summary: Answers the specified question using the provided documents and examples.
+      description: ''
+      operationId: postAnswer
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: AnswerPayload
+              type: object
+              properties:
+                model:
+                  description: ID of the engine to use for completion.
+                  required: true
+                  type: string
+                question:
+                  description: Question to get answered.
+                  required: true
+                  type: string
+                examples:
+                  description: List of (question, answer) pairs that will help steer the model towards the tone and answer format you'd like. We recommend adding 2 to 3 examples.
+                  required: true
+                  type: array
+                examples_context:
+                  description: A text snippet containing the contextual information used to generate the answers for the examples you provide.
+                  required: true
+                  type: string
+                documents:
+                  description: List of documents from which the answer for the input question should be derived. If this is an empty list, the question will be answered based on the question-answer examples.
+                  type: array
+                file:
+                  description: The ID of an uploaded file that contains documents to search over. See upload file for how to upload a file of the desired format and purpose.
+                  type: string
+                search_model:
+                  description: ID of the engine to use for Search.
+                  type: string
+                  default: 'ada'
+                temperature:
+                  description: What sampling temperature to use. Higher values mean the model will take more risks and value 0 (argmax sampling) works better for scenarios with a well-defined answer.
+                  type: number
+                  default: 0
+                logprobs:
+                  description: Include the log probabilities on the logprobs most likely tokens, as well the chosen tokens.
+                  type: integer
+                  default: 0
+                max_tokens:
+                  description: The maximum number of tokens allowed for the generated answer.
+                  type: integer
+                  default: 16
+                stop:
+                  description: Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+                  oneOf:
+                    - type: string
+                    - type: array
+                  default: null
+                n:
+                  description: How many answers to generate for each question.
+                  type: integer
+                  default: 1
+                logit_bias:
+                  description: Modify the likelihood of specified tokens appearing in the completion.
+                  type: object
+                  default: null
+                return_metadata:
+                  description: A special boolean flag for showing metadata. If set to true, each document entry in the returned JSON will contain a "metadata" field.
+                  type: boolean
+                  default: false
+                return_prompt:
+                  description: If set to true, the returned JSON will include a "prompt" field containing the final prompt that was used to request a completion. This is mainly useful for debugging purposes.
+                  type: boolean
+                  default: false
+                expand:
+                  description: If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object ID. Currently we support completion and file objects for expansion.
+                  type: array
+                  default: [ ]
+  /files:
+    get:
+      tags:
+        - files
+      summary: Returns a list of files that belong to the user's organization.
+      description: ''
+      operationId: getFiles
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Files'
+      security:
+        - api_key: []
+    post:
+      tags:
+        - files
+      summary: Upload a file that contains document(s) to be used across various endpoints/features.
+      description: ''
+      operationId: postFile
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: FilePayload
+              type: object
+              properties:
+                file:
+                  description: Name of the JSON Lines file to be uploaded.
+                  required: true
+                  type: string
+                purpose:
+                  description: The intended purpose of the uploaded documents.
+                  required: true
+                  type: string
+  '/files/{file_id}':
+    get:
+      tags:
+        - files
+      summary: Returns information about a specific file.
+      description: ''
+      operationId: getFileById
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - files
+      summary: Delete a file.
+      description: ''
+      operationId: deleteFile
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: file_id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Success
+externalDocs:
+  description: Find out more about OpenAI API
+  url: 'https://beta.openai.com/docs/api-reference/files/retrieve'
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    Engine:
+      title: Engine
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        owner:
+          type: string
+        ready:
+          type: boolean
+    Completion:
+      title: Completion
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+    Search:
+      title: Search
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        object:
+          type: string
+    Classification:
+      title: Classification
+      type: object
+      properties:
+        completion:
+          type: string
+        label:
+          type: string
+        model:
+          type: string
+        object:
+          type: string
+        search_model:
+          type: string
+        selected_examples:
+          type: array
+          items:
+            type: object
+    Answer:
+      title: Answer
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            type: string
+        completion:
+          type: string
+        model:
+          type: string
+        object:
+          type: string
+        search_model:
+          type: string
+        selected_documents:
+          type: array
+          items:
+            type: object
+    Files:
+      title: Files
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        object:
+          type: string
+    File:
+      title: File
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        bytes:
+          type: integer
+        created_at:
+          type: integer
+        filename:
+          type: string
+        purpose:
+          type: string
