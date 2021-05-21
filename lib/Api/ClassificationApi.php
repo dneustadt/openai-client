@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * ClassificationApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -120,11 +120,11 @@ class ClassificationApi
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
      * @param  string $open_ai_organization open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload classification_payload (optional)
+     * @param  \OpenAI\Client\Model\ClassificationPayload $classification_payload classification_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Classification
+     * @return \OpenAI\Client\Model\Classification
      */
     public function postClassification($open_ai_organization = null, $classification_payload = null)
     {
@@ -138,11 +138,11 @@ class ClassificationApi
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload (optional)
+     * @param  \OpenAI\Client\Model\ClassificationPayload $classification_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Classification, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Classification, HTTP status code, HTTP response headers (array of strings)
      */
     public function postClassificationWithHttpInfo($open_ai_organization = null, $classification_payload = null)
     {
@@ -178,20 +178,20 @@ class ClassificationApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Classification' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Classification' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Classification', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Classification', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Classification';
+            $returnType = '\OpenAI\Client\Model\Classification';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -209,7 +209,7 @@ class ClassificationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Classification',
+                        '\OpenAI\Client\Model\Classification',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -225,7 +225,7 @@ class ClassificationApi
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload (optional)
+     * @param  \OpenAI\Client\Model\ClassificationPayload $classification_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -246,14 +246,14 @@ class ClassificationApi
      * The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload (optional)
+     * @param  \OpenAI\Client\Model\ClassificationPayload $classification_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function postClassificationAsyncWithHttpInfo($open_ai_organization = null, $classification_payload = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Classification';
+        $returnType = '\OpenAI\Client\Model\Classification';
         $request = $this->postClassificationRequest($open_ai_organization, $classification_payload);
 
         return $this->client
@@ -293,7 +293,7 @@ class ClassificationApi
      * Create request for operation 'postClassification'
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\ClassificationPayload $classification_payload (optional)
+     * @param  \OpenAI\Client\Model\ClassificationPayload $classification_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

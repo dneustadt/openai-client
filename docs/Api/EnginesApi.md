@@ -1,4 +1,4 @@
-# OpenAPI\Client\EnginesApi
+# OpenAI\Client\EnginesApi
 
 All URIs are relative to https://api.openai.com/v1.
 
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 ## `getEngineById()`
 
 ```php
-getEngineById($engine_id, $open_ai_organization): \OpenAPI\Client\Model\Engine
+getEngineById($engine_id, $open_ai_organization): \OpenAI\Client\Model\Engine
 ```
 
 Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
@@ -24,12 +24,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: api_key
-$config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+$config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+// $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAPI\Client\Api\EnginesApi(
+$apiInstance = new OpenAI\Client\Api\EnginesApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAPI\Client\Model\Engine**](../Model/Engine.md)
+[**\OpenAI\Client\Model\Engine**](../Model/Engine.md)
 
 ### Authorization
 
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 ## `getEngines()`
 
 ```php
-getEngines($open_ai_organization): \OpenAPI\Client\Model\Engine[]
+getEngines($open_ai_organization): \OpenAI\Client\Model\Engine[]
 ```
 
 Lists the currently available engines, and provides basic information about each one such as the owner and availability.
@@ -86,12 +86,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: api_key
-$config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+$config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+// $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAPI\Client\Api\EnginesApi(
+$apiInstance = new OpenAI\Client\Api\EnginesApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAPI\Client\Model\Engine[]**](../Model/Engine.md)
+[**\OpenAI\Client\Model\Engine[]**](../Model/Engine.md)
 
 ### Authorization
 

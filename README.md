@@ -23,16 +23,16 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Configure API key authorization: api_key
-$config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+$config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
 
-$apiInstance = new OpenAPI\Client\Api\AnswerApi(
+$apiInstance = new OpenAI\Client\Api\AnswerApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
 $open_ai_organization = 'open_ai_organization_example'; // optional
-$answer_payload = new \OpenAPI\Client\Model\AnswerPayload(); // \OpenAPI\Client\Model\AnswerPayload
+$answer_payload = new \OpenAI\Client\Model\AnswerPayload(); // \OpenAI\Client\Model\AnswerPayload
 
 try {
     $result = $apiInstance->postAnswer($open_ai_organization, $answer_payload);

@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * EnginesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -122,9 +122,9 @@ class EnginesApi
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Engine
+     * @return \OpenAI\Client\Model\Engine
      */
     public function getEngineById($engine_id, $open_ai_organization = null)
     {
@@ -140,9 +140,9 @@ class EnginesApi
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Engine, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Engine, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEngineByIdWithHttpInfo($engine_id, $open_ai_organization = null)
     {
@@ -178,20 +178,20 @@ class EnginesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Engine' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Engine' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Engine', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Engine', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Engine';
+            $returnType = '\OpenAI\Client\Model\Engine';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -209,7 +209,7 @@ class EnginesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Engine',
+                        '\OpenAI\Client\Model\Engine',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -253,7 +253,7 @@ class EnginesApi
      */
     public function getEngineByIdAsyncWithHttpInfo($engine_id, $open_ai_organization = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Engine';
+        $returnType = '\OpenAI\Client\Model\Engine';
         $request = $this->getEngineByIdRequest($engine_id, $open_ai_organization);
 
         return $this->client
@@ -399,9 +399,9 @@ class EnginesApi
      *
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Engine[]
+     * @return \OpenAI\Client\Model\Engine[]
      */
     public function getEngines($open_ai_organization = null)
     {
@@ -416,9 +416,9 @@ class EnginesApi
      *
      * @param  string $open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Engine[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Engine[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getEnginesWithHttpInfo($open_ai_organization = null)
     {
@@ -454,20 +454,20 @@ class EnginesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Engine[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Engine[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Engine[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Engine[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Engine[]';
+            $returnType = '\OpenAI\Client\Model\Engine[]';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -485,7 +485,7 @@ class EnginesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Engine[]',
+                        '\OpenAI\Client\Model\Engine[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -527,7 +527,7 @@ class EnginesApi
      */
     public function getEnginesAsyncWithHttpInfo($open_ai_organization = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Engine[]';
+        $returnType = '\OpenAI\Client\Model\Engine[]';
         $request = $this->getEnginesRequest($open_ai_organization);
 
         return $this->client

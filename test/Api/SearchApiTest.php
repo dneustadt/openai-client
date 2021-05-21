@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,18 +25,18 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace OpenAPI\Client\Test\Api;
+namespace OpenAI\Client\Test\Api;
 
-use \OpenAPI\Client\Configuration;
-use \OpenAPI\Client\ApiException;
-use \OpenAPI\Client\ObjectSerializer;
+use \OpenAI\Client\Configuration;
+use \OpenAI\Client\ApiException;
+use \OpenAI\Client\ObjectSerializer;
 use PHPUnit\Framework\TestCase;
 
 /**
  * SearchApiTest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */

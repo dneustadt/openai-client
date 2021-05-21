@@ -1,4 +1,4 @@
-# OpenAPI\Client\CompletionsApi
+# OpenAI\Client\CompletionsApi
 
 All URIs are relative to https://api.openai.com/v1.
 
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `postCompletions()`
 
 ```php
-postCompletions($engine_id, $open_ai_organization, $completion_payload): \OpenAPI\Client\Model\Completion
+postCompletions($engine_id, $open_ai_organization, $completion_payload): \OpenAI\Client\Model\Completion
 ```
 
 Creates a new completion for the provided prompt and parameters
@@ -23,12 +23,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 // Configure API key authorization: api_key
-$config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+$config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = OpenAPI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+// $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAPI\Client\Api\CompletionsApi(
+$apiInstance = new OpenAI\Client\Api\CompletionsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -36,7 +36,7 @@ $apiInstance = new OpenAPI\Client\Api\CompletionsApi(
 );
 $engine_id = 56; // int | The ID of the engine to use for this request
 $open_ai_organization = 'open_ai_organization_example'; // string
-$completion_payload = new \OpenAPI\Client\Model\CompletionPayload(); // \OpenAPI\Client\Model\CompletionPayload
+$completion_payload = new \OpenAI\Client\Model\CompletionPayload(); // \OpenAI\Client\Model\CompletionPayload
 
 try {
     $result = $apiInstance->postCompletions($engine_id, $open_ai_organization, $completion_payload);
@@ -52,11 +52,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **engine_id** | **int**| The ID of the engine to use for this request |
  **open_ai_organization** | **string**|  | [optional]
- **completion_payload** | [**\OpenAPI\Client\Model\CompletionPayload**](../Model/CompletionPayload.md)|  | [optional]
+ **completion_payload** | [**\OpenAI\Client\Model\CompletionPayload**](../Model/CompletionPayload.md)|  | [optional]
 
 ### Return type
 
-[**\OpenAPI\Client\Model\Completion**](../Model/Completion.md)
+[**\OpenAI\Client\Model\Completion**](../Model/Completion.md)
 
 ### Authorization
 

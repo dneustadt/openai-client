@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * SearchApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -121,11 +121,11 @@ class SearchApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\SearchPayload $search_payload search_payload (optional)
+     * @param  \OpenAI\Client\Model\SearchPayload $search_payload search_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Search
+     * @return \OpenAI\Client\Model\Search
      */
     public function postSearch($engine_id, $open_ai_organization = null, $search_payload = null)
     {
@@ -140,11 +140,11 @@ class SearchApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Search, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Search, HTTP status code, HTTP response headers (array of strings)
      */
     public function postSearchWithHttpInfo($engine_id, $open_ai_organization = null, $search_payload = null)
     {
@@ -180,20 +180,20 @@ class SearchApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Search' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Search' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Search', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Search', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Search';
+            $returnType = '\OpenAI\Client\Model\Search';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -211,7 +211,7 @@ class SearchApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Search',
+                        '\OpenAI\Client\Model\Search',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -228,7 +228,7 @@ class SearchApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -250,14 +250,14 @@ class SearchApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function postSearchAsyncWithHttpInfo($engine_id, $open_ai_organization = null, $search_payload = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Search';
+        $returnType = '\OpenAI\Client\Model\Search';
         $request = $this->postSearchRequest($engine_id, $open_ai_organization, $search_payload);
 
         return $this->client
@@ -298,7 +298,7 @@ class SearchApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

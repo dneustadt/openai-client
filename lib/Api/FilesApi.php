@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * FilesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -122,7 +122,7 @@ class FilesApi
      * @param  int $file_id file_id (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -139,7 +139,7 @@ class FilesApi
      * @param  int $file_id (required)
      * @param  string $open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -350,9 +350,9 @@ class FilesApi
      * @param  int $file_id file_id (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\File[]
+     * @return \OpenAI\Client\Model\File[]
      */
     public function getFileById($file_id, $open_ai_organization = null)
     {
@@ -368,9 +368,9 @@ class FilesApi
      * @param  int $file_id (required)
      * @param  string $open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\File[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\File[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getFileByIdWithHttpInfo($file_id, $open_ai_organization = null)
     {
@@ -406,20 +406,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\File[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\File[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\File[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\File[]';
+            $returnType = '\OpenAI\Client\Model\File[]';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -437,7 +437,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\File[]',
+                        '\OpenAI\Client\Model\File[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -481,7 +481,7 @@ class FilesApi
      */
     public function getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization = null)
     {
-        $returnType = '\OpenAPI\Client\Model\File[]';
+        $returnType = '\OpenAI\Client\Model\File[]';
         $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
 
         return $this->client
@@ -627,9 +627,9 @@ class FilesApi
      *
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Files[]
+     * @return \OpenAI\Client\Model\Files[]
      */
     public function getFiles($open_ai_organization = null)
     {
@@ -644,9 +644,9 @@ class FilesApi
      *
      * @param  string $open_ai_organization (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getFilesWithHttpInfo($open_ai_organization = null)
     {
@@ -682,20 +682,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Files[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Files[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Files[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Files[]';
+            $returnType = '\OpenAI\Client\Model\Files[]';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -713,7 +713,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Files[]',
+                        '\OpenAI\Client\Model\Files[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -755,7 +755,7 @@ class FilesApi
      */
     public function getFilesAsyncWithHttpInfo($open_ai_organization = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Files[]';
+        $returnType = '\OpenAI\Client\Model\Files[]';
         $request = $this->getFilesRequest($open_ai_organization);
 
         return $this->client
@@ -884,11 +884,11 @@ class FilesApi
      *
      * Upload a file that contains document(s) to be used across various endpoints/features.
      *
-     * @param  \OpenAPI\Client\Model\FilePayload $file_payload file_payload (optional)
+     * @param  \OpenAI\Client\Model\FilePayload $file_payload file_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\File
+     * @return \OpenAI\Client\Model\File
      */
     public function postFile($file_payload = null)
     {
@@ -901,11 +901,11 @@ class FilesApi
      *
      * Upload a file that contains document(s) to be used across various endpoints/features.
      *
-     * @param  \OpenAPI\Client\Model\FilePayload $file_payload (optional)
+     * @param  \OpenAI\Client\Model\FilePayload $file_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\File, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\File, HTTP status code, HTTP response headers (array of strings)
      */
     public function postFileWithHttpInfo($file_payload = null)
     {
@@ -941,20 +941,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\File' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\File' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\File', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\File';
+            $returnType = '\OpenAI\Client\Model\File';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -972,7 +972,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\File',
+                        '\OpenAI\Client\Model\File',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -987,7 +987,7 @@ class FilesApi
      *
      * Upload a file that contains document(s) to be used across various endpoints/features.
      *
-     * @param  \OpenAPI\Client\Model\FilePayload $file_payload (optional)
+     * @param  \OpenAI\Client\Model\FilePayload $file_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1007,14 +1007,14 @@ class FilesApi
      *
      * Upload a file that contains document(s) to be used across various endpoints/features.
      *
-     * @param  \OpenAPI\Client\Model\FilePayload $file_payload (optional)
+     * @param  \OpenAI\Client\Model\FilePayload $file_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function postFileAsyncWithHttpInfo($file_payload = null)
     {
-        $returnType = '\OpenAPI\Client\Model\File';
+        $returnType = '\OpenAI\Client\Model\File';
         $request = $this->postFileRequest($file_payload);
 
         return $this->client
@@ -1053,7 +1053,7 @@ class FilesApi
     /**
      * Create request for operation 'postFile'
      *
-     * @param  \OpenAPI\Client\Model\FilePayload $file_payload (optional)
+     * @param  \OpenAI\Client\Model\FilePayload $file_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

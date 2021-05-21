@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * AnswerApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -120,11 +120,11 @@ class AnswerApi
      * Answers the specified question using the provided documents and examples.
      *
      * @param  string $open_ai_organization open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\AnswerPayload $answer_payload answer_payload (optional)
+     * @param  \OpenAI\Client\Model\AnswerPayload $answer_payload answer_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Answer
+     * @return \OpenAI\Client\Model\Answer
      */
     public function postAnswer($open_ai_organization = null, $answer_payload = null)
     {
@@ -138,11 +138,11 @@ class AnswerApi
      * Answers the specified question using the provided documents and examples.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\AnswerPayload $answer_payload (optional)
+     * @param  \OpenAI\Client\Model\AnswerPayload $answer_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Answer, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Answer, HTTP status code, HTTP response headers (array of strings)
      */
     public function postAnswerWithHttpInfo($open_ai_organization = null, $answer_payload = null)
     {
@@ -178,20 +178,20 @@ class AnswerApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Answer' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Answer' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Answer', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Answer', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Answer';
+            $returnType = '\OpenAI\Client\Model\Answer';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -209,7 +209,7 @@ class AnswerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Answer',
+                        '\OpenAI\Client\Model\Answer',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -225,7 +225,7 @@ class AnswerApi
      * Answers the specified question using the provided documents and examples.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\AnswerPayload $answer_payload (optional)
+     * @param  \OpenAI\Client\Model\AnswerPayload $answer_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -246,14 +246,14 @@ class AnswerApi
      * Answers the specified question using the provided documents and examples.
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\AnswerPayload $answer_payload (optional)
+     * @param  \OpenAI\Client\Model\AnswerPayload $answer_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function postAnswerAsyncWithHttpInfo($open_ai_organization = null, $answer_payload = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Answer';
+        $returnType = '\OpenAI\Client\Model\Answer';
         $request = $this->postAnswerRequest($open_ai_organization, $answer_payload);
 
         return $this->client
@@ -293,7 +293,7 @@ class AnswerApi
      * Create request for operation 'postAnswer'
      *
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\AnswerPayload $answer_payload (optional)
+     * @param  \OpenAI\Client\Model\AnswerPayload $answer_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

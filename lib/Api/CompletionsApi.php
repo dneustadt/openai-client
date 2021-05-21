@@ -4,7 +4,7 @@
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace OpenAI\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -33,16 +33,16 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use OpenAI\Client\ApiException;
+use OpenAI\Client\Configuration;
+use OpenAI\Client\HeaderSelector;
+use OpenAI\Client\ObjectSerializer;
 
 /**
  * CompletionsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -121,11 +121,11 @@ class CompletionsApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\CompletionPayload $completion_payload completion_payload (optional)
+     * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload completion_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Completion
+     * @return \OpenAI\Client\Model\Completion
      */
     public function postCompletions($engine_id, $open_ai_organization = null, $completion_payload = null)
     {
@@ -140,11 +140,11 @@ class CompletionsApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\CompletionPayload $completion_payload (optional)
+     * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response
+     * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Completion, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Completion, HTTP status code, HTTP response headers (array of strings)
      */
     public function postCompletionsWithHttpInfo($engine_id, $open_ai_organization = null, $completion_payload = null)
     {
@@ -180,20 +180,20 @@ class CompletionsApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAPI\Client\Model\Completion' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Completion' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAPI\Client\Model\Completion', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Completion', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAPI\Client\Model\Completion';
+            $returnType = '\OpenAI\Client\Model\Completion';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -211,7 +211,7 @@ class CompletionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Completion',
+                        '\OpenAI\Client\Model\Completion',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -228,7 +228,7 @@ class CompletionsApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\CompletionPayload $completion_payload (optional)
+     * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -250,14 +250,14 @@ class CompletionsApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\CompletionPayload $completion_payload (optional)
+     * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function postCompletionsAsyncWithHttpInfo($engine_id, $open_ai_organization = null, $completion_payload = null)
     {
-        $returnType = '\OpenAPI\Client\Model\Completion';
+        $returnType = '\OpenAI\Client\Model\Completion';
         $request = $this->postCompletionsRequest($engine_id, $open_ai_organization, $completion_payload);
 
         return $this->client
@@ -298,7 +298,7 @@ class CompletionsApi
      *
      * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAPI\Client\Model\CompletionPayload $completion_payload (optional)
+     * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
