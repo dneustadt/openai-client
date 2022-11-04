@@ -1,6 +1,6 @@
 <?php
 /**
- * FilePayloadTest
+ * ImagesGenerationsPayloadTest
  *
  * PHP version 7.2
  *
@@ -31,15 +31,15 @@ namespace OpenAI\Client\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * FilePayloadTest Class Doc Comment
+ * ImagesGenerationsPayloadTest Class Doc Comment
  *
  * @category    Class
- * @description FilePayload
+ * @description ImagesGenerationsPayload
  * @package     OpenAI\Client
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class FilePayloadTest extends TestCase
+class ImagesGenerationsPayloadTest extends TestCase
 {
 
     /**
@@ -71,27 +71,54 @@ class FilePayloadTest extends TestCase
     }
 
     /**
-     * Test "FilePayload"
+     * Test "ImagesGenerationsPayload"
      */
-    public function testFilePayload()
+    public function testImagesGenerationsPayload()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "file"
+     * Test attribute "prompt"
      */
-    public function testPropertyFile()
+    public function testPropertyPrompt()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "purpose"
+     * Test attribute "n"
      */
-    public function testPropertyPurpose()
+    public function testPropertyN()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "size"
+     */
+    public function testPropertySize()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "response_format"
+     */
+    public function testPropertyResponseFormat()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "user"
+     */
+    public function testPropertyUser()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

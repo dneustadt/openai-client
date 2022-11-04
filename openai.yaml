@@ -422,15 +422,16 @@ paths:
         - api_key: [ ]
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               title: FilePayload
               type: object
               properties:
                 file:
-                  description: Name of the JSON Lines file to be uploaded.
+                  description: File to upload.
                   required: true
                   type: string
+                  format: binary
                 purpose:
                   description: The intended purpose of the uploaded documents.
                   required: true
@@ -484,6 +485,142 @@ paths:
       responses:
         '200':
           description: Success
+  '/images/generations':
+    post:
+      tags:
+        - images
+      summary: Given a prompt and/or an input image, the model will generate a new image.
+      description: ''
+      operationId: postImagesGenerations
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Images'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: ImagesGenerationsPayload
+              type: object
+              properties:
+                prompt:
+                  description: A text description of the desired image(s). The maximum length is 1000 characters.
+                  required: true
+                  type: string
+                n:
+                  description: The number of images to generate. Must be between 1 and 10.
+                  type: integer
+                  default: 1
+                size:
+                  description: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+                  type: string
+                  default: '1024x1024'
+                response_format:
+                  description: The format in which the generated images are returned. Must be one of url or b64_json.
+                  type: string
+                  default: 'url'
+                user:
+                  description: A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
+                  type: string
+                  default: null
+  '/images/edits':
+    post:
+      tags:
+        - images
+      summary: Creates an edited or extended image given an original image and a prompt.
+      description: ''
+      operationId: postImagesEdits
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Images'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              title: ImagesEditsPayload
+              type: object
+              properties:
+                image:
+                  description: An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image.
+                  required: true
+                  type: string
+                  format: binary
+                mark:
+                  description: The image to edit. Must be a valid PNG file, less than 4MB, and square.
+                  required: true
+                  type: string
+                  format: binary
+                n:
+                  description: The number of images to generate. Must be between 1 and 10.
+                  type: integer
+                  default: 1
+                size:
+                  description: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+                  type: string
+                  default: '1024x1024'
+                response_format:
+                  description: The format in which the generated images are returned. Must be one of url or b64_json.
+                  type: string
+                  default: 'url'
+                user:
+                  description: A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
+                  type: string
+                  default: null
+  '/images/variations':
+    post:
+      tags:
+        - images
+      summary: Creates a variation of a given image.
+      description: ''
+      operationId: postImagesVariations
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Images'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              title: ImagesVariationsPayload
+              type: object
+              properties:
+                image:
+                  description: The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square.
+                  required: true
+                  type: string
+                  format: binary
+                n:
+                  description: The number of images to generate. Must be between 1 and 10.
+                  type: integer
+                  default: 1
+                size:
+                  description: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+                  type: string
+                  default: '1024x1024'
+                response_format:
+                  description: The format in which the generated images are returned. Must be one of url or b64_json.
+                  type: string
+                  default: 'url'
+                user:
+                  description: A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
+                  type: string
+                  default: null
 externalDocs:
   description: Find out more about OpenAI API
   url: 'https://beta.openai.com/docs/api-reference/files/retrieve'
@@ -596,3 +733,13 @@ components:
           type: string
         purpose:
           type: string
+    Images:
+      title: Images
+      type: object
+      properties:
+        created:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object

@@ -214,10 +214,11 @@ $apiInstance = new OpenAI\Client\Api\FilesApi(
     new GuzzleHttp\Client(),
     $config
 );
-$file_payload = new \OpenAI\Client\Model\FilePayload(); // \OpenAI\Client\Model\FilePayload
+$file = "/path/to/file.txt"; // \SplFileObject | File to upload.
+$purpose = 'purpose_example'; // string | The intended purpose of the uploaded documents.
 
 try {
-    $result = $apiInstance->postFile($file_payload);
+    $result = $apiInstance->postFile($file, $purpose);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling FilesApi->postFile: ', $e->getMessage(), PHP_EOL;
@@ -228,7 +229,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file_payload** | [**\OpenAI\Client\Model\FilePayload**](../Model/FilePayload.md)|  | [optional]
+ **file** | **\SplFileObject****\SplFileObject**| File to upload. | [optional]
+ **purpose** | **string**| The intended purpose of the uploaded documents. | [optional]
 
 ### Return type
 
@@ -240,7 +242,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`
+- **Content-Type**: `multipart/form-data`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

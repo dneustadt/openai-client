@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .php_cs
 .travis.yml
 README.md
@@ -9,6 +8,7 @@ docs/Api/ClassificationApi.md
 docs/Api/CompletionsApi.md
 docs/Api/EnginesApi.md
 docs/Api/FilesApi.md
+docs/Api/ImagesApi.md
 docs/Api/SearchApi.md
 docs/Model/Answer.md
 docs/Model/AnswerPayload.md
@@ -18,8 +18,9 @@ docs/Model/Completion.md
 docs/Model/CompletionPayload.md
 docs/Model/Engine.md
 docs/Model/File.md
-docs/Model/FilePayload.md
 docs/Model/Files.md
+docs/Model/Images.md
+docs/Model/ImagesGenerationsPayload.md
 docs/Model/Search.md
 docs/Model/SearchPayload.md
 git_push.sh
@@ -28,6 +29,7 @@ lib/Api/ClassificationApi.php
 lib/Api/CompletionsApi.php
 lib/Api/EnginesApi.php
 lib/Api/FilesApi.php
+lib/Api/ImagesApi.php
 lib/Api/SearchApi.php
 lib/ApiException.php
 lib/Configuration.php
@@ -40,8 +42,9 @@ lib/Model/Completion.php
 lib/Model/CompletionPayload.php
 lib/Model/Engine.php
 lib/Model/File.php
-lib/Model/FilePayload.php
 lib/Model/Files.php
+lib/Model/Images.php
+lib/Model/ImagesGenerationsPayload.php
 lib/Model/ModelInterface.php
 lib/Model/Search.php
 lib/Model/SearchPayload.php
@@ -53,6 +56,7 @@ test/Api/CompletionsApiTest.php
 test/Api/EnginesApiTest.php
 test/Api/FilesApiTest.php
 test/Api/SearchApiTest.php
+test/Api/ImagesApiTest.php
 test/Model/AnswerPayloadTest.php
 test/Model/AnswerTest.php
 test/Model/ClassificationPayloadTest.php
@@ -65,3 +69,5 @@ test/Model/FileTest.php
 test/Model/FilesTest.php
 test/Model/SearchPayloadTest.php
 test/Model/SearchTest.php
+test/Model/ImagesGenerationsPayloadTest.php
+test/Model/ImagesTest.php

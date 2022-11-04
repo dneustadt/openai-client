@@ -1,11 +1,11 @@
 <?php
 /**
- * FilePayload
+ * Images
  *
  * PHP version 7.2
  *
  * @category Class
- * @package  OpenAI\Client
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,23 +26,23 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAI\Client\Model;
+namespace OpenAPI\Client\Model;
 
 use \ArrayAccess;
-use \OpenAI\Client\ObjectSerializer;
+use \OpenAPI\Client\ObjectSerializer;
 
 /**
- * FilePayload Class Doc Comment
+ * Images Class Doc Comment
  *
  * @category Class
- * @package  OpenAI\Client
+ * @package  OpenAPI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<TKey, TValue>
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
+class Images implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'FilePayload';
+    protected static $openAPIModelName = 'Images';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -59,8 +59,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'file' => 'string',
-        'purpose' => 'string'
+        'created' => 'int',
+        'data' => 'object[]'
     ];
 
     /**
@@ -71,8 +71,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'file' => null,
-        'purpose' => null
+        'created' => null,
+        'data' => null
     ];
 
     /**
@@ -102,8 +102,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'file' => 'file',
-        'purpose' => 'purpose'
+        'created' => 'created',
+        'data' => 'data'
     ];
 
     /**
@@ -112,8 +112,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'file' => 'setFile',
-        'purpose' => 'setPurpose'
+        'created' => 'setCreated',
+        'data' => 'setData'
     ];
 
     /**
@@ -122,8 +122,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'file' => 'getFile',
-        'purpose' => 'getPurpose'
+        'created' => 'getCreated',
+        'data' => 'getData'
     ];
 
     /**
@@ -183,8 +183,8 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['file'] = $data['file'] ?? null;
-        $this->container['purpose'] = $data['purpose'] ?? null;
+        $this->container['created'] = $data['created'] ?? null;
+        $this->container['data'] = $data['data'] ?? null;
     }
 
     /**
@@ -212,49 +212,49 @@ class FilePayload implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets file
+     * Gets created
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getFile()
+    public function getCreated()
     {
-        return $this->container['file'];
+        return $this->container['created'];
     }
 
     /**
-     * Sets file
+     * Sets created
      *
-     * @param string|null $file Name of the JSON Lines file to be uploaded.
+     * @param int|null $created created
      *
      * @return self
      */
-    public function setFile($file)
+    public function setCreated($created)
     {
-        $this->container['file'] = $file;
+        $this->container['created'] = $created;
 
         return $this;
     }
 
     /**
-     * Gets purpose
+     * Gets data
      *
-     * @return string|null
+     * @return object[]|null
      */
-    public function getPurpose()
+    public function getData()
     {
-        return $this->container['purpose'];
+        return $this->container['data'];
     }
 
     /**
-     * Sets purpose
+     * Sets data
      *
-     * @param string|null $purpose The intended purpose of the uploaded documents.
+     * @param object[]|null $data data
      *
      * @return self
      */
-    public function setPurpose($purpose)
+    public function setData($data)
     {
-        $this->container['purpose'] = $purpose;
+        $this->container['data'] = $data;
 
         return $this;
     }

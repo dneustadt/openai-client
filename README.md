@@ -58,6 +58,9 @@ Class | Method | HTTP request | Description
 *FilesApi* | [**getFileById**](docs/Api/FilesApi.md#getfilebyid) | **GET** /files/{file_id} | Returns information about a specific file.
 *FilesApi* | [**getFiles**](docs/Api/FilesApi.md#getfiles) | **GET** /files | Returns a list of files that belong to the user&#39;s organization.
 *FilesApi* | [**postFile**](docs/Api/FilesApi.md#postfile) | **POST** /files | Upload a file that contains document(s) to be used across various endpoints/features.
+*ImagesApi* | [**postImagesEdits**](docs/Api/ImagesApi.md#postimagesedits) | **POST** /images/edits | Creates an edited or extended image given an original image and a prompt.
+*ImagesApi* | [**postImagesGenerations**](docs/Api/ImagesApi.md#postimagesgenerations) | **POST** /images/generations | Given a prompt and/or an input image, the model will generate a new image.
+*ImagesApi* | [**postImagesVariations**](docs/Api/ImagesApi.md#postimagesvariations) | **POST** /images/variations | Creates a variation of a given image.
 *SearchApi* | [**postSearch**](docs/Api/SearchApi.md#postsearch) | **POST** /engines/{engine_id}/search | The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
 
 ## Models
@@ -67,7 +70,7 @@ Class | Method | HTTP request | Description
 - [AnswerPayload](docs/Model/AnswerPayload.md)
 - [ClassificationPayload](docs/Model/ClassificationPayload.md)
 - [CompletionPayload](docs/Model/CompletionPayload.md)
-- [FilePayload](docs/Model/FilePayload.md)
+- [ImagesGenerationsPayload](docs/Model/ImagesGenerationsPayload.md)
 - [SearchPayload](docs/Model/SearchPayload.md)
 
 ### Response Models
@@ -78,6 +81,7 @@ Class | Method | HTTP request | Description
 - [Engine](docs/Model/Engine.md)
 - [File](docs/Model/File.md)
 - [Files](docs/Model/Files.md)
+- [Images](docs/Model/Images.md)
 - [Search](docs/Model/Search.md)
 
 ## Tests

@@ -1,6 +1,6 @@
 <?php
 /**
- * FilesApi
+ * ImagesApi
  * PHP version 7.2
  *
  * @category Class
@@ -39,14 +39,14 @@ use OpenAI\Client\HeaderSelector;
 use OpenAI\Client\ObjectSerializer;
 
 /**
- * FilesApi Class Doc Comment
+ * ImagesApi Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class FilesApi
+class ImagesApi
 {
     /**
      * @var ClientInterface
@@ -115,266 +115,46 @@ class FilesApi
     }
 
     /**
-     * Operation deleteFile
+     * Operation postImagesEdits
      *
-     * Delete a file.
+     * Creates an edited or extended image given an original image and a prompt.
      *
-     * @param  int $file_id file_id (required)
-     * @param  string $open_ai_organization open_ai_organization (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function deleteFile($file_id, $open_ai_organization = null)
-    {
-        $this->deleteFileWithHttpInfo($file_id, $open_ai_organization);
-    }
-
-    /**
-     * Operation deleteFileWithHttpInfo
-     *
-     * Delete a file.
-     *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
+     * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
+     * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return \OpenAI\Client\Model\Images
      */
-    public function deleteFileWithHttpInfo($file_id, $open_ai_organization = null)
+    public function postImagesEdits($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation deleteFileAsync
-     *
-     * Delete a file.
-     *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteFileAsync($file_id, $open_ai_organization = null)
-    {
-        return $this->deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation deleteFileAsyncWithHttpInfo
-     *
-     * Delete a file.
-     *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization = null)
-    {
-        $returnType = '';
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'deleteFile'
-     *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function deleteFileRequest($file_id, $open_ai_organization = null)
-    {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling deleteFile'
-            );
-        }
-
-        $resourcePath = '/files/{file_id}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // header params
-        if ($open_ai_organization !== null) {
-            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
-        }
-
-        // path params
-        if ($file_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
-                $resourcePath
-            );
-        }
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation getFileById
-     *
-     * Returns information about a specific file.
-     *
-     * @param  int $file_id file_id (required)
-     * @param  string $open_ai_organization open_ai_organization (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File[]
-     */
-    public function getFileById($file_id, $open_ai_organization = null)
-    {
-        list($response) = $this->getFileByIdWithHttpInfo($file_id, $open_ai_organization);
+        list($response) = $this->postImagesEditsWithHttpInfo($image, $mark, $n, $size, $response_format, $user);
         return $response;
     }
 
     /**
-     * Operation getFileByIdWithHttpInfo
+     * Operation postImagesEditsWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Creates an edited or extended image given an original image and a prompt.
      *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
+     * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
+     * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getFileByIdWithHttpInfo($file_id, $open_ai_organization = null)
+    public function postImagesEditsWithHttpInfo($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $request = $this->postImagesEditsRequest($image, $mark, $n, $size, $response_format, $user);
 
         try {
             $options = $this->createHttpClientOption();
@@ -406,20 +186,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\File[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Images' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Images', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\File[]';
+            $returnType = '\OpenAI\Client\Model\Images';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -437,7 +217,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File[]',
+                        '\OpenAI\Client\Model\Images',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -448,19 +228,23 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsync
+     * Operation postImagesEditsAsync
      *
-     * Returns information about a specific file.
+     * Creates an edited or extended image given an original image and a prompt.
      *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
+     * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
+     * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsync($file_id, $open_ai_organization = null)
+    public function postImagesEditsAsync($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        return $this->getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization)
+        return $this->postImagesEditsAsyncWithHttpInfo($image, $mark, $n, $size, $response_format, $user)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -469,20 +253,24 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsyncWithHttpInfo
+     * Operation postImagesEditsAsyncWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Creates an edited or extended image given an original image and a prompt.
      *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
+     * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
+     * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization = null)
+    public function postImagesEditsAsyncWithHttpInfo($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        $returnType = '\OpenAI\Client\Model\File[]';
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\Images';
+        $request = $this->postImagesEditsRequest($image, $mark, $n, $size, $response_format, $user);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -518,24 +306,22 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'getFileById'
+     * Create request for operation 'postImagesEdits'
      *
-     * @param  int $file_id (required)
-     * @param  string $open_ai_organization (optional)
+     * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
+     * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getFileByIdRequest($file_id, $open_ai_organization = null)
+    public function postImagesEditsRequest($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling getFileById'
-            );
-        }
 
-        $resourcePath = '/files/{file_id}';
+        $resourcePath = '/images/edits';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -543,551 +329,611 @@ class FilesApi
         $multipart = false;
 
 
-        // header params
-        if ($open_ai_organization !== null) {
-            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
-        }
 
-        // path params
-        if ($file_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
-                $resourcePath
-            );
-        }
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation getFiles
-     *
-     * Returns a list of files that belong to the user&#39;s organization.
-     *
-     * @param  string $open_ai_organization open_ai_organization (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\Files[]
-     */
-    public function getFiles($open_ai_organization = null)
-    {
-        list($response) = $this->getFilesWithHttpInfo($open_ai_organization);
-        return $response;
-    }
-
-    /**
-     * Operation getFilesWithHttpInfo
-     *
-     * Returns a list of files that belong to the user&#39;s organization.
-     *
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
-     */
-    public function getFilesWithHttpInfo($open_ai_organization = null)
-    {
-        $request = $this->getFilesRequest($open_ai_organization);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('\OpenAI\Client\Model\Files[]' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files[]', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\OpenAI\Client\Model\Files[]';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\OpenAI\Client\Model\Files[]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation getFilesAsync
-     *
-     * Returns a list of files that belong to the user&#39;s organization.
-     *
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getFilesAsync($open_ai_organization = null)
-    {
-        return $this->getFilesAsyncWithHttpInfo($open_ai_organization)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getFilesAsyncWithHttpInfo
-     *
-     * Returns a list of files that belong to the user&#39;s organization.
-     *
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getFilesAsyncWithHttpInfo($open_ai_organization = null)
-    {
-        $returnType = '\OpenAI\Client\Model\Files[]';
-        $request = $this->getFilesRequest($open_ai_organization);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'getFiles'
-     *
-     * @param  string $open_ai_organization (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function getFilesRequest($open_ai_organization = null)
-    {
-
-        $resourcePath = '/files';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // header params
-        if ($open_ai_organization !== null) {
-            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
-        }
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation postFile
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File
-     */
-    public function postFile($file = null, $purpose = null)
-    {
-        list($response) = $this->postFileWithHttpInfo($file, $purpose);
-        return $response;
-    }
-
-    /**
-     * Operation postFileWithHttpInfo
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function postFileWithHttpInfo($file = null, $purpose = null)
-    {
-        $request = $this->postFileRequest($file, $purpose);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('\OpenAI\Client\Model\File' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\OpenAI\Client\Model\File';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation postFileAsync
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postFileAsync($file = null, $purpose = null)
-    {
-        return $this->postFileAsyncWithHttpInfo($file, $purpose)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation postFileAsyncWithHttpInfo
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postFileAsyncWithHttpInfo($file = null, $purpose = null)
-    {
-        $returnType = '\OpenAPI\Client\Model\File';
-        $request = $this->postFileRequest($file, $purpose);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'postFile'
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function postFileRequest($file = null, $purpose = null)
-    {
-
-        $resourcePath = '/files';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
 
         // form params
-        if ($file !== null) {
+        if ($image !== null) {
             $multipart = true;
-            $formParams['file'] = [];
-            $paramFiles = is_array($file) ? $file : [$file];
+            $formParams['image'] = [];
+            $paramFiles = is_array($image) ? $image : [$image];
             foreach ($paramFiles as $paramFile) {
-                $formParams['file'][] = \GuzzleHttp\Psr7\try_fopen(
+                $formParams['image'][] = \GuzzleHttp\Psr7\try_fopen(
                     ObjectSerializer::toFormValue($paramFile),
                     'rb'
                 );
             }
         }
         // form params
-        if ($purpose !== null) {
-            $formParams['purpose'] = ObjectSerializer::toFormValue($purpose);
+        if ($mark !== null) {
+            $multipart = true;
+            $formParams['mark'] = [];
+            $paramFiles = is_array($mark) ? $mark : [$mark];
+            foreach ($paramFiles as $paramFile) {
+                $formParams['mark'][] = \GuzzleHttp\Psr7\try_fopen(
+                    ObjectSerializer::toFormValue($paramFile),
+                    'rb'
+                );
+            }
+        }
+        // form params
+        if ($n !== null) {
+            $formParams['n'] = ObjectSerializer::toFormValue($n);
+        }
+        // form params
+        if ($size !== null) {
+            $formParams['size'] = ObjectSerializer::toFormValue($size);
+        }
+        // form params
+        if ($response_format !== null) {
+            $formParams['response_format'] = ObjectSerializer::toFormValue($response_format);
+        }
+        // form params
+        if ($user !== null) {
+            $formParams['user'] = ObjectSerializer::toFormValue($user);
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['multipart/form-data']
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation postImagesGenerations
+     *
+     * Given a prompt and/or an input image, the model will generate a new image.
+     *
+     * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload images_generations_payload (optional)
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \OpenAI\Client\Model\Images
+     */
+    public function postImagesGenerations($images_generations_payload = null)
+    {
+        list($response) = $this->postImagesGenerationsWithHttpInfo($images_generations_payload);
+        return $response;
+    }
+
+    /**
+     * Operation postImagesGenerationsWithHttpInfo
+     *
+     * Given a prompt and/or an input image, the model will generate a new image.
+     *
+     * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function postImagesGenerationsWithHttpInfo($images_generations_payload = null)
+    {
+        $request = $this->postImagesGenerationsRequest($images_generations_payload);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\OpenAI\Client\Model\Images' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Images', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\OpenAI\Client\Model\Images';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\OpenAI\Client\Model\Images',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation postImagesGenerationsAsync
+     *
+     * Given a prompt and/or an input image, the model will generate a new image.
+     *
+     * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postImagesGenerationsAsync($images_generations_payload = null)
+    {
+        return $this->postImagesGenerationsAsyncWithHttpInfo($images_generations_payload)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation postImagesGenerationsAsyncWithHttpInfo
+     *
+     * Given a prompt and/or an input image, the model will generate a new image.
+     *
+     * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postImagesGenerationsAsyncWithHttpInfo($images_generations_payload = null)
+    {
+        $returnType = '\OpenAI\Client\Model\Images';
+        $request = $this->postImagesGenerationsRequest($images_generations_payload);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'postImagesGenerations'
+     *
+     * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function postImagesGenerationsRequest($images_generations_payload = null)
+    {
+
+        $resourcePath = '/images/generations';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($images_generations_payload)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($images_generations_payload));
+            } else {
+                $httpBody = $images_generations_payload;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation postImagesVariations
+     *
+     * Creates a variation of a given image.
+     *
+     * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \OpenAI\Client\Model\Images
+     */
+    public function postImagesVariations($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    {
+        list($response) = $this->postImagesVariationsWithHttpInfo($image, $n, $size, $response_format, $user);
+        return $response;
+    }
+
+    /**
+     * Operation postImagesVariationsWithHttpInfo
+     *
+     * Creates a variation of a given image.
+     *
+     * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function postImagesVariationsWithHttpInfo($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    {
+        $request = $this->postImagesVariationsRequest($image, $n, $size, $response_format, $user);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\OpenAI\Client\Model\Images' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Images', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\OpenAI\Client\Model\Images';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\OpenAI\Client\Model\Images',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation postImagesVariationsAsync
+     *
+     * Creates a variation of a given image.
+     *
+     * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postImagesVariationsAsync($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    {
+        return $this->postImagesVariationsAsyncWithHttpInfo($image, $n, $size, $response_format, $user)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation postImagesVariationsAsyncWithHttpInfo
+     *
+     * Creates a variation of a given image.
+     *
+     * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postImagesVariationsAsyncWithHttpInfo($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    {
+        $returnType = '\OpenAI\Client\Model\Images';
+        $request = $this->postImagesVariationsRequest($image, $n, $size, $response_format, $user);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'postImagesVariations'
+     *
+     * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
+     * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
+     * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
+     * @param  string $response_format The format in which the generated images are returned. Must be one of url or b64_json. (optional, default to 'url')
+     * @param  string $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse. (optional, default to 'null')
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function postImagesVariationsRequest($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    {
+
+        $resourcePath = '/images/variations';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+        // form params
+        if ($image !== null) {
+            $multipart = true;
+            $formParams['image'] = [];
+            $paramFiles = is_array($image) ? $image : [$image];
+            foreach ($paramFiles as $paramFile) {
+                $formParams['image'][] = \GuzzleHttp\Psr7\try_fopen(
+                    ObjectSerializer::toFormValue($paramFile),
+                    'rb'
+                );
+            }
+        }
+        // form params
+        if ($n !== null) {
+            $formParams['n'] = ObjectSerializer::toFormValue($n);
+        }
+        // form params
+        if ($size !== null) {
+            $formParams['size'] = ObjectSerializer::toFormValue($size);
+        }
+        // form params
+        if ($response_format !== null) {
+            $formParams['response_format'] = ObjectSerializer::toFormValue($response_format);
+        }
+        // form params
+        if ($user !== null) {
+            $formParams['user'] = ObjectSerializer::toFormValue($user);
         }
 
         if ($multipart) {
