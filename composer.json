@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0 || ^9.0",
-        "friendsofphp/php-cs-fixer": "^2.12"
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "symfony/dotenv": "^6.0"
     },
     "autoload": {
         "psr-4": { "OpenAI\\Client\\" : "lib/" }

@@ -1,6 +1,9 @@
 # ref: https://github.com/github/gitignore/blob/master/Composer.gitignore
 .DS_store
 .idea
+.env
+!.env.dist
+.env.local.php
 composer.phar
 /vendor/
 
