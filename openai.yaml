@@ -1133,6 +1133,8 @@ components:
           type: string
         data:
           type: array
+          items:
+            type: object
         usage:
           type: object
     Moderations:
@@ -1145,6 +1147,8 @@ components:
           type: string
         result:
           type: array
+          items:
+            type: object
     FineTunes:
       title: FineTunes
       type: object
@@ -1153,6 +1157,8 @@ components:
           type: string
         data:
           type: array
+          items:
+            type: object
     FineTune:
       title: FineTune
       type: object
@@ -1167,6 +1173,8 @@ components:
           type: integer
         events:
           type: array
+          items:
+            type: object
         fine_tuned_model:
           type: string
         hyperparams:
@@ -1181,6 +1189,8 @@ components:
           type: array
         training_files:
           type: array
+          items:
+            type: object
         updated_at:
           type: integer
     FineTuneEvents:
@@ -1191,3 +1201,5 @@ components:
           type: string
         data:
           type: array
+          items:
+            type: object

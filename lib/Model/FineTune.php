@@ -63,14 +63,14 @@ class FineTune implements ModelInterface, ArrayAccess, \JsonSerializable
         'object' => 'string',
         'model' => 'string',
         'created_at' => 'int',
-        'events' => 'array',
+        'events' => 'object[]',
         'fine_tuned_model' => 'string',
         'hyperparams' => 'object',
         'organization_id' => 'string',
         'result_files' => 'array',
         'status' => 'string',
         'validation_files' => 'array',
-        'training_files' => 'array',
+        'training_files' => 'object[]',
         'updated_at' => 'int'
     ];
 
@@ -376,7 +376,7 @@ class FineTune implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets events
      *
-     * @return array|null
+     * @return object[]|null
      */
     public function getEvents()
     {
@@ -386,7 +386,7 @@ class FineTune implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets events
      *
-     * @param array|null $events events
+     * @param object[]|null $events events
      *
      * @return self
      */
@@ -544,7 +544,7 @@ class FineTune implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets training_files
      *
-     * @return array|null
+     * @return object[]|null
      */
     public function getTrainingFiles()
     {
@@ -554,7 +554,7 @@ class FineTune implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets training_files
      *
-     * @param array|null $training_files training_files
+     * @param object[]|null $training_files training_files
      *
      * @return self
      */

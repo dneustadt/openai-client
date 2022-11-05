@@ -78,9 +78,3 @@ lib/Model/Search.php
 lib/Model/SearchPayload.php
 lib/ObjectSerializer.php
 phpunit.xml.dist
-test/Api/FineTunesApiTest.php
-test/Model/FineTuneEventsTest.php
-test/Model/FineTuneTest.php
-test/Model/FineTunesPayloadTest.php
-test/Model/FineTunesTest.php
-test/Model/ModelDeleteTest.php

@@ -60,7 +60,7 @@ class FineTuneEvents implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'object' => 'string',
-        'data' => 'array'
+        'data' => 'object[]'
     ];
 
     /**
@@ -238,7 +238,7 @@ class FineTuneEvents implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets data
      *
-     * @return array|null
+     * @return object[]|null
      */
     public function getData()
     {
@@ -248,7 +248,7 @@ class FineTuneEvents implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets data
      *
-     * @param array|null $data data
+     * @param object[]|null $data data
      *
      * @return self
      */

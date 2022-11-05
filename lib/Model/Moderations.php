@@ -61,7 +61,7 @@ class Moderations implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'id' => 'string',
         'model' => 'string',
-        'result' => 'array'
+        'result' => 'object[]'
     ];
 
     /**
@@ -268,7 +268,7 @@ class Moderations implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets result
      *
-     * @return array|null
+     * @return object[]|null
      */
     public function getResult()
     {
@@ -278,7 +278,7 @@ class Moderations implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets result
      *
-     * @param array|null $result result
+     * @param object[]|null $result result
      *
      * @return self
      */
