@@ -130,7 +130,7 @@ Name | Type | Description  | Notes
 ## `getFiles()`
 
 ```php
-getFiles($open_ai_organization): \OpenAI\Client\Model\Files[]
+getFiles($open_ai_organization): \OpenAI\Client\Model\Files
 ```
 
 Returns a list of files that belong to the user's organization.
@@ -172,7 +172,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAI\Client\Model\Files[]**](../Model/Files.md)
+[**\OpenAI\Client\Model\Files**](../Model/Files.md)
 
 ### Authorization
 

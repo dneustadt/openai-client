@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 ## `getModels()`
 
 ```php
-getModels($open_ai_organization): \OpenAI\Client\Model\Model[]
+getModels($open_ai_organization): \OpenAI\Client\Model\Models
 ```
 
 Lists the currently available models, and provides basic information about each one such as the owner and availability.
@@ -178,7 +178,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAI\Client\Model\Model[]**](../Model/Model.md)
+[**\OpenAI\Client\Model\Models**](../Model/Models.md)
 
 ### Authorization
 

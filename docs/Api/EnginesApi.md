@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 ## `getEngines()`
 
 ```php
-getEngines($open_ai_organization): \OpenAI\Client\Model\Engine[]
+getEngines($open_ai_organization): \OpenAI\Client\Model\Engines
 ```
 
 Lists the currently available engines, and provides basic information about each one such as the owner and availability.
@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\OpenAI\Client\Model\Engine[]**](../Model/Engine.md)
+[**\OpenAI\Client\Model\Engines**](../Model/Engines.md)
 
 ### Authorization
 

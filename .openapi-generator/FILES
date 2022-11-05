@@ -23,6 +23,7 @@ docs/Model/CompletionPayload.md
 docs/Model/Embeddings.md
 docs/Model/EmbeddingsPayload.md
 docs/Model/Engine.md
+docs/Model/Engines.md
 docs/Model/File.md
 docs/Model/Files.md
 docs/Model/FineTune.md
@@ -33,6 +34,7 @@ docs/Model/Images.md
 docs/Model/ImagesGenerationsPayload.md
 docs/Model/Model.md
 docs/Model/ModelDelete.md
+docs/Model/Models.md
 docs/Model/Moderations.md
 docs/Model/ModerationsPayload.md
 docs/Model/Search.md
@@ -61,6 +63,7 @@ lib/Model/CompletionPayload.php
 lib/Model/Embeddings.php
 lib/Model/EmbeddingsPayload.php
 lib/Model/Engine.php
+lib/Model/Engines.php
 lib/Model/File.php
 lib/Model/Files.php
 lib/Model/FineTune.php
@@ -72,6 +75,7 @@ lib/Model/ImagesGenerationsPayload.php
 lib/Model/Model.php
 lib/Model/ModelDelete.php
 lib/Model/ModelInterface.php
+lib/Model/Models.php
 lib/Model/Moderations.php
 lib/Model/ModerationsPayload.php
 lib/Model/Search.php

@@ -32,9 +32,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Engine'
+                $ref: '#/components/schemas/Engines'
       security:
         - api_key: []
   '/engines/{engine_id}':
@@ -401,9 +399,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Files'
+                $ref: '#/components/schemas/Files'
       security:
         - api_key: []
     post:
@@ -659,9 +655,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Model'
+                $ref: '#/components/schemas/Models'
       security:
         - api_key: []
   '/models/{model}':
@@ -989,6 +983,16 @@ components:
       name: Authorization
       in: header
   schemas:
+    Engines:
+      title: Engines
+      type: object
+      properties:
+        object:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
     Engine:
       title: Engine
       type: object
@@ -1097,6 +1101,16 @@ components:
       properties:
         created:
           type: integer
+        data:
+          type: array
+          items:
+            type: object
+    Models:
+      title: Models
+      type: object
+      properties:
+        object:
+          type: string
         data:
           type: array
           items:

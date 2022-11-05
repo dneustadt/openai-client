@@ -629,7 +629,7 @@ class FilesApi
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\Files[]
+     * @return \OpenAI\Client\Model\Files
      */
     public function getFiles($open_ai_organization = null)
     {
@@ -646,7 +646,7 @@ class FilesApi
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Files, HTTP status code, HTTP response headers (array of strings)
      */
     public function getFilesWithHttpInfo($open_ai_organization = null)
     {
@@ -682,20 +682,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\Files[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Files' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\Files[]';
+            $returnType = '\OpenAI\Client\Model\Files';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -713,7 +713,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\Files[]',
+                        '\OpenAI\Client\Model\Files',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -755,7 +755,7 @@ class FilesApi
      */
     public function getFilesAsyncWithHttpInfo($open_ai_organization = null)
     {
-        $returnType = '\OpenAI\Client\Model\Files[]';
+        $returnType = '\OpenAI\Client\Model\Files';
         $request = $this->getFilesRequest($open_ai_organization);
 
         return $this->client
