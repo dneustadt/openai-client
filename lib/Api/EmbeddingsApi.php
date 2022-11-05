@@ -1,6 +1,6 @@
 <?php
 /**
- * SearchApi
+ * EmbeddingsApi
  * PHP version 7.2
  *
  * @category Class
@@ -39,14 +39,14 @@ use OpenAI\Client\HeaderSelector;
 use OpenAI\Client\ObjectSerializer;
 
 /**
- * SearchApi Class Doc Comment
+ * EmbeddingsApi Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class SearchApi
+class EmbeddingsApi
 {
     /**
      * @var ClientInterface
@@ -115,40 +115,38 @@ class SearchApi
     }
 
     /**
-     * Operation postSearch
+     * Operation postEmbeddings
      *
-     * The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+     * Creates an embedding vector representing the input text.
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
-     * @param  \OpenAI\Client\Model\SearchPayload $search_payload search_payload (optional)
+     * @param  \OpenAI\Client\Model\EmbeddingsPayload $embeddings_payload embeddings_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\Search
+     * @return \OpenAI\Client\Model\Embeddings
      */
-    public function postSearch($engine_id, $open_ai_organization = null, $search_payload = null)
+    public function postEmbeddings($open_ai_organization = null, $embeddings_payload = null)
     {
-        list($response) = $this->postSearchWithHttpInfo($engine_id, $open_ai_organization, $search_payload);
+        list($response) = $this->postEmbeddingsWithHttpInfo($open_ai_organization, $embeddings_payload);
         return $response;
     }
 
     /**
-     * Operation postSearchWithHttpInfo
+     * Operation postEmbeddingsWithHttpInfo
      *
-     * The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+     * Creates an embedding vector representing the input text.
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\EmbeddingsPayload $embeddings_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\Search, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Embeddings, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postSearchWithHttpInfo($engine_id, $open_ai_organization = null, $search_payload = null)
+    public function postEmbeddingsWithHttpInfo($open_ai_organization = null, $embeddings_payload = null)
     {
-        $request = $this->postSearchRequest($engine_id, $open_ai_organization, $search_payload);
+        $request = $this->postEmbeddingsRequest($open_ai_organization, $embeddings_payload);
 
         try {
             $options = $this->createHttpClientOption();
@@ -180,20 +178,20 @@ class SearchApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\Search' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Embeddings' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Search', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Embeddings', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\Search';
+            $returnType = '\OpenAI\Client\Model\Embeddings';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -211,7 +209,7 @@ class SearchApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\Search',
+                        '\OpenAI\Client\Model\Embeddings',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -222,20 +220,19 @@ class SearchApi
     }
 
     /**
-     * Operation postSearchAsync
+     * Operation postEmbeddingsAsync
      *
-     * The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+     * Creates an embedding vector representing the input text.
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\EmbeddingsPayload $embeddings_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postSearchAsync($engine_id, $open_ai_organization = null, $search_payload = null)
+    public function postEmbeddingsAsync($open_ai_organization = null, $embeddings_payload = null)
     {
-        return $this->postSearchAsyncWithHttpInfo($engine_id, $open_ai_organization, $search_payload)
+        return $this->postEmbeddingsAsyncWithHttpInfo($open_ai_organization, $embeddings_payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -244,21 +241,20 @@ class SearchApi
     }
 
     /**
-     * Operation postSearchAsyncWithHttpInfo
+     * Operation postEmbeddingsAsyncWithHttpInfo
      *
-     * The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+     * Creates an embedding vector representing the input text.
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\EmbeddingsPayload $embeddings_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postSearchAsyncWithHttpInfo($engine_id, $open_ai_organization = null, $search_payload = null)
+    public function postEmbeddingsAsyncWithHttpInfo($open_ai_organization = null, $embeddings_payload = null)
     {
-        $returnType = '\OpenAI\Client\Model\Search';
-        $request = $this->postSearchRequest($engine_id, $open_ai_organization, $search_payload);
+        $returnType = '\OpenAI\Client\Model\Embeddings';
+        $request = $this->postEmbeddingsRequest($open_ai_organization, $embeddings_payload);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -294,25 +290,18 @@ class SearchApi
     }
 
     /**
-     * Create request for operation 'postSearch'
+     * Create request for operation 'postEmbeddings'
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
-     * @param  \OpenAI\Client\Model\SearchPayload $search_payload (optional)
+     * @param  \OpenAI\Client\Model\EmbeddingsPayload $embeddings_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postSearchRequest($engine_id, $open_ai_organization = null, $search_payload = null)
+    public function postEmbeddingsRequest($open_ai_organization = null, $embeddings_payload = null)
     {
-        // verify the required parameter 'engine_id' is set
-        if ($engine_id === null || (is_array($engine_id) && count($engine_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $engine_id when calling postSearch'
-            );
-        }
 
-        $resourcePath = '/search';
+        $resourcePath = '/embeddings';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -325,14 +314,6 @@ class SearchApi
             $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
         }
 
-        // path params
-        if ($engine_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'engine_id' . '}',
-                ObjectSerializer::toPathValue($engine_id),
-                $resourcePath
-            );
-        }
 
 
         if ($multipart) {
@@ -347,11 +328,11 @@ class SearchApi
         }
 
         // for model (json/xml)
-        if (isset($search_payload)) {
+        if (isset($embeddings_payload)) {
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($search_payload));
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($embeddings_payload));
             } else {
-                $httpBody = $search_payload;
+                $httpBody = $embeddings_payload;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {

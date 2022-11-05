@@ -62,6 +62,22 @@ class OpenAiClientTinkerwellDriver extends TinkerwellDriver
                 'Search API Instance',
                 '$api = new \OpenAI\Client\Api\SearchApi($client, $config);' . \PHP_EOL
             ),
+            SetCode::create(
+                'Embeddings API Instance',
+                '$api = new \OpenAI\Client\Api\EmbeddingsApi($client, $config);' . \PHP_EOL
+            ),
+            SetCode::create(
+                'Fine Tunes API Instance',
+                '$api = new \OpenAI\Client\Api\FineTunesApi($client, $config);' . \PHP_EOL
+            ),
+            SetCode::create(
+                'Models API Instance',
+                '$api = new \OpenAI\Client\Api\ModelsApi($client, $config);' . \PHP_EOL
+            ),
+            SetCode::create(
+                'Moderations API Instance',
+                '$api = new \OpenAI\Client\Api\ModerationsApi($client, $config);' . \PHP_EOL
+            ),
         ];
     }
 }

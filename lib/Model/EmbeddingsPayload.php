@@ -1,6 +1,6 @@
 <?php
 /**
- * ImagesGenerationsPayload
+ * EmbeddingsPayload
  *
  * PHP version 7.2
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \OpenAI\Client\ObjectSerializer;
 
 /**
- * ImagesGenerationsPayload Class Doc Comment
+ * EmbeddingsPayload Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
@@ -42,7 +42,7 @@ use \OpenAI\Client\ObjectSerializer;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSerializable
+class EmbeddingsPayload implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'ImagesGenerationsPayload';
+    protected static $openAPIModelName = 'EmbeddingsPayload';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -59,10 +59,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
-        'prompt' => 'string',
-        'n' => 'int',
-        'size' => 'string',
-        'response_format' => 'string',
+        'model' => 'string',
+        'input' => 'string',
         'user' => 'string'
     ];
 
@@ -74,10 +72,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'prompt' => null,
-        'n' => null,
-        'size' => null,
-        'response_format' => null,
+        'model' => null,
+        'input' => null,
         'user' => null
     ];
 
@@ -108,10 +104,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
-        'prompt' => 'prompt',
-        'n' => 'n',
-        'size' => 'size',
-        'response_format' => 'response_format',
+        'model' => 'model',
+        'input' => 'input',
         'user' => 'user'
     ];
 
@@ -121,10 +115,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
-        'prompt' => 'setPrompt',
-        'n' => 'setN',
-        'size' => 'setSize',
-        'response_format' => 'setResponseFormat',
+        'model' => 'setModel',
+        'input' => 'setInput',
         'user' => 'setUser'
     ];
 
@@ -134,10 +126,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
-        'prompt' => 'getPrompt',
-        'n' => 'getN',
-        'size' => 'getSize',
-        'response_format' => 'getResponseFormat',
+        'model' => 'getModel',
+        'input' => 'getInput',
         'user' => 'getUser'
     ];
 
@@ -198,10 +188,8 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(array $data = null)
     {
-        $this->container['prompt'] = $data['prompt'] ?? null;
-        $this->container['n'] = $data['n'] ?? 1;
-        $this->container['size'] = $data['size'] ?? '1024x1024';
-        $this->container['response_format'] = $data['response_format'] ?? 'url';
+        $this->container['model'] = $data['model'] ?? null;
+        $this->container['input'] = $data['input'] ?? null;
         $this->container['user'] = $data['user'] ?? 'null';
     }
 
@@ -230,97 +218,49 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
-     * Gets prompt
+     * Gets model
      *
      * @return string|null
      */
-    public function getPrompt()
+    public function getModel()
     {
-        return $this->container['prompt'];
+        return $this->container['model'];
     }
 
     /**
-     * Sets prompt
+     * Sets model
      *
-     * @param string|null $prompt A text description of the desired image(s). The maximum length is 1000 characters.
+     * @param string|null $model ID of the model to use. You can use the List models API to see all of your available models, or see our Model overview for descriptions of them.
      *
      * @return self
      */
-    public function setPrompt($prompt)
+    public function setModel($model)
     {
-        $this->container['prompt'] = $prompt;
+        $this->container['model'] = $model;
 
         return $this;
     }
 
     /**
-     * Gets n
-     *
-     * @return int|null
-     */
-    public function getN()
-    {
-        return $this->container['n'];
-    }
-
-    /**
-     * Sets n
-     *
-     * @param int|null $n The number of images to generate. Must be between 1 and 10.
-     *
-     * @return self
-     */
-    public function setN($n)
-    {
-        $this->container['n'] = $n;
-
-        return $this;
-    }
-
-    /**
-     * Gets size
+     * Gets input
      *
      * @return string|null
      */
-    public function getSize()
+    public function getInput()
     {
-        return $this->container['size'];
+        return $this->container['input'];
     }
 
     /**
-     * Sets size
+     * Sets input
      *
-     * @param string|null $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+     * @param string|null $input Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 2048 tokens in length.
      *
      * @return self
      */
-    public function setSize($size)
+    public function setInput($input)
     {
-        $this->container['size'] = $size;
-
-        return $this;
-    }
-
-    /**
-     * Gets response_format
-     *
-     * @return string|null
-     */
-    public function getResponseFormat()
-    {
-        return $this->container['response_format'];
-    }
-
-    /**
-     * Sets response_format
-     *
-     * @param string|null $response_format The format in which the generated images are returned. Must be one of url or b64_json.
-     *
-     * @return self
-     */
-    public function setResponseFormat($response_format)
-    {
-        $this->container['response_format'] = $response_format;
+        $this->container['input'] = $input;
 
         return $this;
     }

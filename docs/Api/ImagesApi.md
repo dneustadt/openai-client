@@ -12,7 +12,7 @@ Method | HTTP request | Description
 ## `postImagesEdits()`
 
 ```php
-postImagesEdits($image, $mark, $n, $size, $response_format, $user): \OpenAI\Client\Model\Images
+postImagesEdits($open_ai_organization, $image, $mark, $n, $size, $response_format, $user): \OpenAI\Client\Model\Images
 ```
 
 Creates an edited or extended image given an original image and a prompt.
@@ -36,6 +36,7 @@ $apiInstance = new OpenAI\Client\Api\ImagesApi(
     new GuzzleHttp\Client(),
     $config
 );
+$open_ai_organization = 'open_ai_organization_example'; // string
 $image = "/path/to/file.txt"; // \SplFileObject | An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image.
 $mark = "/path/to/file.txt"; // \SplFileObject | The image to edit. Must be a valid PNG file, less than 4MB, and square.
 $n = 1; // int | The number of images to generate. Must be between 1 and 10.
@@ -44,7 +45,7 @@ $response_format = 'url'; // string | The format in which the generated images a
 $user = 'null'; // string | A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
 
 try {
-    $result = $apiInstance->postImagesEdits($image, $mark, $n, $size, $response_format, $user);
+    $result = $apiInstance->postImagesEdits($open_ai_organization, $image, $mark, $n, $size, $response_format, $user);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ImagesApi->postImagesEdits: ', $e->getMessage(), PHP_EOL;
@@ -55,6 +56,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **open_ai_organization** | **string**|  | [optional]
  **image** | **\SplFileObject****\SplFileObject**| An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. | [optional]
  **mark** | **\SplFileObject****\SplFileObject**| The image to edit. Must be a valid PNG file, less than 4MB, and square. | [optional]
  **n** | **int**| The number of images to generate. Must be between 1 and 10. | [optional] [default to 1]
@@ -82,7 +84,7 @@ Name | Type | Description  | Notes
 ## `postImagesGenerations()`
 
 ```php
-postImagesGenerations($images_generations_payload): \OpenAI\Client\Model\Images
+postImagesGenerations($open_ai_organization, $images_generations_payload): \OpenAI\Client\Model\Images
 ```
 
 Given a prompt and/or an input image, the model will generate a new image.
@@ -106,10 +108,11 @@ $apiInstance = new OpenAI\Client\Api\ImagesApi(
     new GuzzleHttp\Client(),
     $config
 );
+$open_ai_organization = 'open_ai_organization_example'; // string
 $images_generations_payload = new \OpenAI\Client\Model\ImagesGenerationsPayload(); // \OpenAI\Client\Model\ImagesGenerationsPayload
 
 try {
-    $result = $apiInstance->postImagesGenerations($images_generations_payload);
+    $result = $apiInstance->postImagesGenerations($open_ai_organization, $images_generations_payload);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ImagesApi->postImagesGenerations: ', $e->getMessage(), PHP_EOL;
@@ -120,6 +123,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **open_ai_organization** | **string**|  | [optional]
  **images_generations_payload** | [**\OpenAI\Client\Model\ImagesGenerationsPayload**](../Model/ImagesGenerationsPayload.md)|  | [optional]
 
 ### Return type
@@ -142,7 +146,7 @@ Name | Type | Description  | Notes
 ## `postImagesVariations()`
 
 ```php
-postImagesVariations($image, $n, $size, $response_format, $user): \OpenAI\Client\Model\Images
+postImagesVariations($open_ai_organization, $image, $n, $size, $response_format, $user): \OpenAI\Client\Model\Images
 ```
 
 Creates a variation of a given image.
@@ -166,6 +170,7 @@ $apiInstance = new OpenAI\Client\Api\ImagesApi(
     new GuzzleHttp\Client(),
     $config
 );
+$open_ai_organization = 'open_ai_organization_example'; // string
 $image = "/path/to/file.txt"; // \SplFileObject | The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square.
 $n = 1; // int | The number of images to generate. Must be between 1 and 10.
 $size = '1024x1024'; // string | The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
@@ -173,7 +178,7 @@ $response_format = 'url'; // string | The format in which the generated images a
 $user = 'null'; // string | A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
 
 try {
-    $result = $apiInstance->postImagesVariations($image, $n, $size, $response_format, $user);
+    $result = $apiInstance->postImagesVariations($open_ai_organization, $image, $n, $size, $response_format, $user);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ImagesApi->postImagesVariations: ', $e->getMessage(), PHP_EOL;
@@ -184,6 +189,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **open_ai_organization** | **string**|  | [optional]
  **image** | **\SplFileObject****\SplFileObject**| The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. | [optional]
  **n** | **int**| The number of images to generate. Must be between 1 and 10. | [optional] [default to 1]
  **size** | **string**| The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. | [optional] [default to &#39;1024x1024&#39;]

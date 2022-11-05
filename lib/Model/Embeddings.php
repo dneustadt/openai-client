@@ -1,6 +1,6 @@
 <?php
 /**
- * ImagesGenerationsPayload
+ * Embeddings
  *
  * PHP version 7.2
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \OpenAI\Client\ObjectSerializer;
 
 /**
- * ImagesGenerationsPayload Class Doc Comment
+ * Embeddings Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
@@ -42,7 +42,7 @@ use \OpenAI\Client\ObjectSerializer;
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSerializable
+class Embeddings implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'ImagesGenerationsPayload';
+    protected static $openAPIModelName = 'Embeddings';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -59,11 +59,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
-        'prompt' => 'string',
-        'n' => 'int',
-        'size' => 'string',
-        'response_format' => 'string',
-        'user' => 'string'
+        'object' => 'string',
+        'data' => 'array',
+        'usage' => 'object'
     ];
 
     /**
@@ -74,11 +72,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'prompt' => null,
-        'n' => null,
-        'size' => null,
-        'response_format' => null,
-        'user' => null
+        'object' => null,
+        'data' => null,
+        'usage' => null
     ];
 
     /**
@@ -108,11 +104,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
-        'prompt' => 'prompt',
-        'n' => 'n',
-        'size' => 'size',
-        'response_format' => 'response_format',
-        'user' => 'user'
+        'object' => 'object',
+        'data' => 'data',
+        'usage' => 'usage'
     ];
 
     /**
@@ -121,11 +115,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
-        'prompt' => 'setPrompt',
-        'n' => 'setN',
-        'size' => 'setSize',
-        'response_format' => 'setResponseFormat',
-        'user' => 'setUser'
+        'object' => 'setObject',
+        'data' => 'setData',
+        'usage' => 'setUsage'
     ];
 
     /**
@@ -134,11 +126,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
-        'prompt' => 'getPrompt',
-        'n' => 'getN',
-        'size' => 'getSize',
-        'response_format' => 'getResponseFormat',
-        'user' => 'getUser'
+        'object' => 'getObject',
+        'data' => 'getData',
+        'usage' => 'getUsage'
     ];
 
     /**
@@ -198,11 +188,9 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(array $data = null)
     {
-        $this->container['prompt'] = $data['prompt'] ?? null;
-        $this->container['n'] = $data['n'] ?? 1;
-        $this->container['size'] = $data['size'] ?? '1024x1024';
-        $this->container['response_format'] = $data['response_format'] ?? 'url';
-        $this->container['user'] = $data['user'] ?? 'null';
+        $this->container['object'] = $data['object'] ?? null;
+        $this->container['data'] = $data['data'] ?? null;
+        $this->container['usage'] = $data['usage'] ?? null;
     }
 
     /**
@@ -230,121 +218,73 @@ class ImagesGenerationsPayload implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
-     * Gets prompt
+     * Gets object
      *
      * @return string|null
      */
-    public function getPrompt()
+    public function getObject()
     {
-        return $this->container['prompt'];
+        return $this->container['object'];
     }
 
     /**
-     * Sets prompt
+     * Sets object
      *
-     * @param string|null $prompt A text description of the desired image(s). The maximum length is 1000 characters.
+     * @param string|null $object object
      *
      * @return self
      */
-    public function setPrompt($prompt)
+    public function setObject($object)
     {
-        $this->container['prompt'] = $prompt;
+        $this->container['object'] = $object;
 
         return $this;
     }
 
     /**
-     * Gets n
+     * Gets data
      *
-     * @return int|null
+     * @return array|null
      */
-    public function getN()
+    public function getData()
     {
-        return $this->container['n'];
+        return $this->container['data'];
     }
 
     /**
-     * Sets n
+     * Sets data
      *
-     * @param int|null $n The number of images to generate. Must be between 1 and 10.
+     * @param array|null $data data
      *
      * @return self
      */
-    public function setN($n)
+    public function setData($data)
     {
-        $this->container['n'] = $n;
+        $this->container['data'] = $data;
 
         return $this;
     }
 
     /**
-     * Gets size
+     * Gets usage
      *
-     * @return string|null
+     * @return object|null
      */
-    public function getSize()
+    public function getUsage()
     {
-        return $this->container['size'];
+        return $this->container['usage'];
     }
 
     /**
-     * Sets size
+     * Sets usage
      *
-     * @param string|null $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+     * @param object|null $usage usage
      *
      * @return self
      */
-    public function setSize($size)
+    public function setUsage($usage)
     {
-        $this->container['size'] = $size;
-
-        return $this;
-    }
-
-    /**
-     * Gets response_format
-     *
-     * @return string|null
-     */
-    public function getResponseFormat()
-    {
-        return $this->container['response_format'];
-    }
-
-    /**
-     * Sets response_format
-     *
-     * @param string|null $response_format The format in which the generated images are returned. Must be one of url or b64_json.
-     *
-     * @return self
-     */
-    public function setResponseFormat($response_format)
-    {
-        $this->container['response_format'] = $response_format;
-
-        return $this;
-    }
-
-    /**
-     * Gets user
-     *
-     * @return string|null
-     */
-    public function getUser()
-    {
-        return $this->container['user'];
-    }
-
-    /**
-     * Sets user
-     *
-     * @param string|null $user A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
-     *
-     * @return self
-     */
-    public function setUser($user)
-    {
-        $this->container['user'] = $user;
+        $this->container['usage'] = $usage;
 
         return $this;
     }

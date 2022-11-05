@@ -1,6 +1,6 @@
 <?php
 /**
- * FilesApi
+ * FineTunesApi
  * PHP version 7.2
  *
  * @category Class
@@ -39,14 +39,14 @@ use OpenAI\Client\HeaderSelector;
 use OpenAI\Client\ObjectSerializer;
 
 /**
- * FilesApi Class Doc Comment
+ * FineTunesApi Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class FilesApi
+class FineTunesApi
 {
     /**
      * @var ClientInterface
@@ -115,37 +115,38 @@ class FilesApi
     }
 
     /**
-     * Operation deleteFile
+     * Operation getFineTune
      *
-     * Delete a file.
+     * Gets info about the fine-tune job.
      *
-     * @param  int $file_id file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \OpenAI\Client\Model\FineTune
      */
-    public function deleteFile($file_id, $open_ai_organization = null)
+    public function getFineTune($fine_tune_id, $open_ai_organization = null)
     {
-        $this->deleteFileWithHttpInfo($file_id, $open_ai_organization);
+        list($response) = $this->getFineTuneWithHttpInfo($fine_tune_id, $open_ai_organization);
+        return $response;
     }
 
     /**
-     * Operation deleteFileWithHttpInfo
+     * Operation getFineTuneWithHttpInfo
      *
-     * Delete a file.
+     * Gets info about the fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\FineTune, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteFileWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getFineTuneWithHttpInfo($fine_tune_id, $open_ai_organization = null)
     {
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
+        $request = $this->getFineTuneRequest($fine_tune_id, $open_ai_organization);
 
         try {
             $options = $this->createHttpClientOption();
@@ -175,29 +176,63 @@ class FilesApi
                 );
             }
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    if ('\OpenAI\Client\Model\FineTune' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\FineTune', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\OpenAI\Client\Model\FineTune';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\OpenAI\Client\Model\FineTune',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
             }
             throw $e;
         }
     }
 
     /**
-     * Operation deleteFileAsync
+     * Operation getFineTuneAsync
      *
-     * Delete a file.
+     * Gets info about the fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteFileAsync($file_id, $open_ai_organization = null)
+    public function getFineTuneAsync($fine_tune_id, $open_ai_organization = null)
     {
-        return $this->deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization)
+        return $this->getFineTuneAsyncWithHttpInfo($fine_tune_id, $open_ai_organization)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -206,26 +241,36 @@ class FilesApi
     }
 
     /**
-     * Operation deleteFileAsyncWithHttpInfo
+     * Operation getFineTuneAsyncWithHttpInfo
      *
-     * Delete a file.
+     * Gets info about the fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getFineTuneAsyncWithHttpInfo($fine_tune_id, $open_ai_organization = null)
     {
-        $returnType = '';
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\FineTune';
+        $request = $this->getFineTuneRequest($fine_tune_id, $open_ai_organization);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -245,24 +290,24 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'deleteFile'
+     * Create request for operation 'getFineTune'
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteFileRequest($file_id, $open_ai_organization = null)
+    public function getFineTuneRequest($fine_tune_id, $open_ai_organization = null)
     {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
+        // verify the required parameter 'fine_tune_id' is set
+        if ($fine_tune_id === null || (is_array($fine_tune_id) && count($fine_tune_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling deleteFile'
+                'Missing the required parameter $fine_tune_id when calling getFineTune'
             );
         }
 
-        $resourcePath = '/files/{file_id}';
+        $resourcePath = '/fine-tunes/{fine_tune_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -276,10 +321,10 @@ class FilesApi
         }
 
         // path params
-        if ($file_id !== null) {
+        if ($fine_tune_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
+                '{' . 'fine_tune_id' . '}',
+                ObjectSerializer::toPathValue($fine_tune_id),
                 $resourcePath
             );
         }
@@ -287,11 +332,11 @@ class FilesApi
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
+                ['application/json'],
                 []
             );
         }
@@ -335,7 +380,7 @@ class FilesApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'DELETE',
+            'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -343,38 +388,40 @@ class FilesApi
     }
 
     /**
-     * Operation getFileById
+     * Operation getFineTuneEvents
      *
-     * Returns information about a specific file.
+     * Get fine-grained status updates for a fine-tune job.
      *
-     * @param  int $file_id file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job to get events for. (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
+     * @param  bool $stream Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available. (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File[]
+     * @return \OpenAI\Client\Model\FineTuneEvents
      */
-    public function getFileById($file_id, $open_ai_organization = null)
+    public function getFineTuneEvents($fine_tune_id, $open_ai_organization = null, $stream = null)
     {
-        list($response) = $this->getFileByIdWithHttpInfo($file_id, $open_ai_organization);
+        list($response) = $this->getFineTuneEventsWithHttpInfo($fine_tune_id, $open_ai_organization, $stream);
         return $response;
     }
 
     /**
-     * Operation getFileByIdWithHttpInfo
+     * Operation getFineTuneEventsWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Get fine-grained status updates for a fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job to get events for. (required)
      * @param  string $open_ai_organization (optional)
+     * @param  bool $stream Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available. (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\FineTuneEvents, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getFileByIdWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getFineTuneEventsWithHttpInfo($fine_tune_id, $open_ai_organization = null, $stream = null)
     {
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $request = $this->getFineTuneEventsRequest($fine_tune_id, $open_ai_organization, $stream);
 
         try {
             $options = $this->createHttpClientOption();
@@ -406,20 +453,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\File[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\FineTuneEvents' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\FineTuneEvents', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\File[]';
+            $returnType = '\OpenAI\Client\Model\FineTuneEvents';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -437,7 +484,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File[]',
+                        '\OpenAI\Client\Model\FineTuneEvents',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -448,19 +495,20 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsync
+     * Operation getFineTuneEventsAsync
      *
-     * Returns information about a specific file.
+     * Get fine-grained status updates for a fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job to get events for. (required)
      * @param  string $open_ai_organization (optional)
+     * @param  bool $stream Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsync($file_id, $open_ai_organization = null)
+    public function getFineTuneEventsAsync($fine_tune_id, $open_ai_organization = null, $stream = null)
     {
-        return $this->getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization)
+        return $this->getFineTuneEventsAsyncWithHttpInfo($fine_tune_id, $open_ai_organization, $stream)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -469,20 +517,21 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsyncWithHttpInfo
+     * Operation getFineTuneEventsAsyncWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Get fine-grained status updates for a fine-tune job.
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job to get events for. (required)
      * @param  string $open_ai_organization (optional)
+     * @param  bool $stream Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getFineTuneEventsAsyncWithHttpInfo($fine_tune_id, $open_ai_organization = null, $stream = null)
     {
-        $returnType = '\OpenAI\Client\Model\File[]';
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\FineTuneEvents';
+        $request = $this->getFineTuneEventsRequest($fine_tune_id, $open_ai_organization, $stream);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -518,24 +567,298 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'getFileById'
+     * Create request for operation 'getFineTuneEvents'
      *
-     * @param  int $file_id (required)
+     * @param  string $fine_tune_id The ID of the fine-tune job to get events for. (required)
+     * @param  string $open_ai_organization (optional)
+     * @param  bool $stream Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getFineTuneEventsRequest($fine_tune_id, $open_ai_organization = null, $stream = null)
+    {
+        // verify the required parameter 'fine_tune_id' is set
+        if ($fine_tune_id === null || (is_array($fine_tune_id) && count($fine_tune_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $fine_tune_id when calling getFineTuneEvents'
+            );
+        }
+
+        $resourcePath = '/fine-tunes/{fine_tune_id}/events';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($stream !== null) {
+            if('form' === 'form' && is_array($stream)) {
+                foreach($stream as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['stream'] = $stream;
+            }
+        }
+
+        // header params
+        if ($open_ai_organization !== null) {
+            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
+        }
+
+        // path params
+        if ($fine_tune_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'fine_tune_id' . '}',
+                ObjectSerializer::toPathValue($fine_tune_id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getFineTunes
+     *
+     * List your organization&#39;s fine-tuning jobs
+     *
+     * @param  string $open_ai_organization open_ai_organization (optional)
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \OpenAI\Client\Model\FineTunes
+     */
+    public function getFineTunes($open_ai_organization = null)
+    {
+        list($response) = $this->getFineTunesWithHttpInfo($open_ai_organization);
+        return $response;
+    }
+
+    /**
+     * Operation getFineTunesWithHttpInfo
+     *
+     * List your organization&#39;s fine-tuning jobs
+     *
+     * @param  string $open_ai_organization (optional)
+     *
+     * @throws \OpenAI\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \OpenAI\Client\Model\FineTunes, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getFineTunesWithHttpInfo($open_ai_organization = null)
+    {
+        $request = $this->getFineTunesRequest($open_ai_organization);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            switch($statusCode) {
+                case 200:
+                    if ('\OpenAI\Client\Model\FineTunes' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\FineTunes', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\OpenAI\Client\Model\FineTunes';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\OpenAI\Client\Model\FineTunes',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getFineTunesAsync
+     *
+     * List your organization&#39;s fine-tuning jobs
+     *
+     * @param  string $open_ai_organization (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getFineTunesAsync($open_ai_organization = null)
+    {
+        return $this->getFineTunesAsyncWithHttpInfo($open_ai_organization)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getFineTunesAsyncWithHttpInfo
+     *
+     * List your organization&#39;s fine-tuning jobs
+     *
+     * @param  string $open_ai_organization (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getFineTunesAsyncWithHttpInfo($open_ai_organization = null)
+    {
+        $returnType = '\OpenAI\Client\Model\FineTunes';
+        $request = $this->getFineTunesRequest($open_ai_organization);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getFineTunes'
+     *
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getFileByIdRequest($file_id, $open_ai_organization = null)
+    public function getFineTunesRequest($open_ai_organization = null)
     {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling getFileById'
-            );
-        }
 
-        $resourcePath = '/files/{file_id}';
+        $resourcePath = '/fine-tunes';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -548,14 +871,6 @@ class FilesApi
             $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
         }
 
-        // path params
-        if ($file_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
-                $resourcePath
-            );
-        }
 
 
         if ($multipart) {
@@ -621,36 +936,38 @@ class FilesApi
     }
 
     /**
-     * Operation getFiles
+     * Operation postFineTuneCancel
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Immediately cancel a fine-tune job.
      *
+     * @param  string $fine_tune_id The ID of the fine-tune job to cancel (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\Files[]
+     * @return \OpenAI\Client\Model\FineTune
      */
-    public function getFiles($open_ai_organization = null)
+    public function postFineTuneCancel($fine_tune_id, $open_ai_organization = null)
     {
-        list($response) = $this->getFilesWithHttpInfo($open_ai_organization);
+        list($response) = $this->postFineTuneCancelWithHttpInfo($fine_tune_id, $open_ai_organization);
         return $response;
     }
 
     /**
-     * Operation getFilesWithHttpInfo
+     * Operation postFineTuneCancelWithHttpInfo
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Immediately cancel a fine-tune job.
      *
+     * @param  string $fine_tune_id The ID of the fine-tune job to cancel (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\FineTune, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getFilesWithHttpInfo($open_ai_organization = null)
+    public function postFineTuneCancelWithHttpInfo($fine_tune_id, $open_ai_organization = null)
     {
-        $request = $this->getFilesRequest($open_ai_organization);
+        $request = $this->postFineTuneCancelRequest($fine_tune_id, $open_ai_organization);
 
         try {
             $options = $this->createHttpClientOption();
@@ -682,20 +999,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\Files[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\FineTune' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\FineTune', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\Files[]';
+            $returnType = '\OpenAI\Client\Model\FineTune';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -713,7 +1030,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\Files[]',
+                        '\OpenAI\Client\Model\FineTune',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -724,18 +1041,19 @@ class FilesApi
     }
 
     /**
-     * Operation getFilesAsync
+     * Operation postFineTuneCancelAsync
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Immediately cancel a fine-tune job.
      *
+     * @param  string $fine_tune_id The ID of the fine-tune job to cancel (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFilesAsync($open_ai_organization = null)
+    public function postFineTuneCancelAsync($fine_tune_id, $open_ai_organization = null)
     {
-        return $this->getFilesAsyncWithHttpInfo($open_ai_organization)
+        return $this->postFineTuneCancelAsyncWithHttpInfo($fine_tune_id, $open_ai_organization)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -744,19 +1062,20 @@ class FilesApi
     }
 
     /**
-     * Operation getFilesAsyncWithHttpInfo
+     * Operation postFineTuneCancelAsyncWithHttpInfo
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Immediately cancel a fine-tune job.
      *
+     * @param  string $fine_tune_id The ID of the fine-tune job to cancel (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFilesAsyncWithHttpInfo($open_ai_organization = null)
+    public function postFineTuneCancelAsyncWithHttpInfo($fine_tune_id, $open_ai_organization = null)
     {
-        $returnType = '\OpenAI\Client\Model\Files[]';
-        $request = $this->getFilesRequest($open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\FineTune';
+        $request = $this->postFineTuneCancelRequest($fine_tune_id, $open_ai_organization);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -792,17 +1111,24 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'getFiles'
+     * Create request for operation 'postFineTuneCancel'
      *
+     * @param  string $fine_tune_id The ID of the fine-tune job to cancel (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getFilesRequest($open_ai_organization = null)
+    public function postFineTuneCancelRequest($fine_tune_id, $open_ai_organization = null)
     {
+        // verify the required parameter 'fine_tune_id' is set
+        if ($fine_tune_id === null || (is_array($fine_tune_id) && count($fine_tune_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $fine_tune_id when calling postFineTuneCancel'
+            );
+        }
 
-        $resourcePath = '/files';
+        $resourcePath = '/fine-tunes/{fine_tune_id}/cancel';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -815,6 +1141,14 @@ class FilesApi
             $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
         }
 
+        // path params
+        if ($fine_tune_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'fine_tune_id' . '}',
+                ObjectSerializer::toPathValue($fine_tune_id),
+                $resourcePath
+            );
+        }
 
 
         if ($multipart) {
@@ -872,7 +1206,7 @@ class FilesApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'GET',
+            'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -880,38 +1214,38 @@ class FilesApi
     }
 
     /**
-     * Operation postFile
+     * Operation postFineTunes
      *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
+     * Creates a job that fine-tunes a specified model from a given dataset.
      *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
+     * @param  string $open_ai_organization open_ai_organization (optional)
+     * @param  \OpenAI\Client\Model\FineTunesPayload $fine_tunes_payload fine_tunes_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File
+     * @return \OpenAI\Client\Model\FineTune
      */
-    public function postFile($file = null, $purpose = null)
+    public function postFineTunes($open_ai_organization = null, $fine_tunes_payload = null)
     {
-        list($response) = $this->postFileWithHttpInfo($file, $purpose);
+        list($response) = $this->postFineTunesWithHttpInfo($open_ai_organization, $fine_tunes_payload);
         return $response;
     }
 
     /**
-     * Operation postFileWithHttpInfo
+     * Operation postFineTunesWithHttpInfo
      *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
+     * Creates a job that fine-tunes a specified model from a given dataset.
      *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
+     * @param  string $open_ai_organization (optional)
+     * @param  \OpenAI\Client\Model\FineTunesPayload $fine_tunes_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\FineTune, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postFileWithHttpInfo($file = null, $purpose = null)
+    public function postFineTunesWithHttpInfo($open_ai_organization = null, $fine_tunes_payload = null)
     {
-        $request = $this->postFileRequest($file, $purpose);
+        $request = $this->postFineTunesRequest($open_ai_organization, $fine_tunes_payload);
 
         try {
             $options = $this->createHttpClientOption();
@@ -943,20 +1277,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\File' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\FineTune' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\FineTune', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\File';
+            $returnType = '\OpenAI\Client\Model\FineTune';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -974,7 +1308,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File',
+                        '\OpenAI\Client\Model\FineTune',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -985,19 +1319,19 @@ class FilesApi
     }
 
     /**
-     * Operation postFileAsync
+     * Operation postFineTunesAsync
      *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
+     * Creates a job that fine-tunes a specified model from a given dataset.
      *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
+     * @param  string $open_ai_organization (optional)
+     * @param  \OpenAI\Client\Model\FineTunesPayload $fine_tunes_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postFileAsync($file = null, $purpose = null)
+    public function postFineTunesAsync($open_ai_organization = null, $fine_tunes_payload = null)
     {
-        return $this->postFileAsyncWithHttpInfo($file, $purpose)
+        return $this->postFineTunesAsyncWithHttpInfo($open_ai_organization, $fine_tunes_payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1006,20 +1340,20 @@ class FilesApi
     }
 
     /**
-     * Operation postFileAsyncWithHttpInfo
+     * Operation postFineTunesAsyncWithHttpInfo
      *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
+     * Creates a job that fine-tunes a specified model from a given dataset.
      *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
+     * @param  string $open_ai_organization (optional)
+     * @param  \OpenAI\Client\Model\FineTunesPayload $fine_tunes_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postFileAsyncWithHttpInfo($file = null, $purpose = null)
+    public function postFineTunesAsyncWithHttpInfo($open_ai_organization = null, $fine_tunes_payload = null)
     {
-        $returnType = '\OpenAI\Client\Model\File';
-        $request = $this->postFileRequest($file, $purpose);
+        $returnType = '\OpenAI\Client\Model\FineTune';
+        $request = $this->postFineTunesRequest($open_ai_organization, $fine_tunes_payload);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1055,18 +1389,18 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'postFile'
+     * Create request for operation 'postFineTunes'
      *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
+     * @param  string $open_ai_organization (optional)
+     * @param  \OpenAI\Client\Model\FineTunesPayload $fine_tunes_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postFileRequest($file = null, $purpose = null)
+    public function postFineTunesRequest($open_ai_organization = null, $fine_tunes_payload = null)
     {
 
-        $resourcePath = '/files';
+        $resourcePath = '/fine-tunes';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1074,24 +1408,12 @@ class FilesApi
         $multipart = false;
 
 
+        // header params
+        if ($open_ai_organization !== null) {
+            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
+        }
 
 
-        // form params
-        if ($file !== null) {
-            $multipart = true;
-            $formParams['file'] = [];
-            $paramFiles = is_array($file) ? $file : [$file];
-            foreach ($paramFiles as $paramFile) {
-                $formParams['file'][] = \GuzzleHttp\Psr7\try_fopen(
-                    ObjectSerializer::toFormValue($paramFile),
-                    'rb'
-                );
-            }
-        }
-        // form params
-        if ($purpose !== null) {
-            $formParams['purpose'] = ObjectSerializer::toFormValue($purpose);
-        }
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -1100,12 +1422,18 @@ class FilesApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                ['multipart/form-data']
+                ['application/json']
             );
         }
 
         // for model (json/xml)
-        if (count($formParams) > 0) {
+        if (isset($fine_tunes_payload)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($fine_tunes_payload));
+            } else {
+                $httpBody = $fine_tunes_payload;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

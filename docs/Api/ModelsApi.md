@@ -1,77 +1,21 @@
-# OpenAI\Client\FilesApi
+# OpenAI\Client\ModelsApi
 
 All URIs are relative to https://api.openai.com/v1.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteFile()**](FilesApi.md#deleteFile) | **DELETE** /files/{file_id} | Delete a file.
-[**getFileById()**](FilesApi.md#getFileById) | **GET** /files/{file_id} | Returns information about a specific file.
-[**getFiles()**](FilesApi.md#getFiles) | **GET** /files | Returns a list of files that belong to the user&#39;s organization.
-[**postFile()**](FilesApi.md#postFile) | **POST** /files | Upload a file that contains document(s) to be used across various endpoints/features.
+[**deleteModel()**](ModelsApi.md#deleteModel) | **DELETE** /models/{model} | Delete a fine-tuned model. You must have the Owner role in your organization.
+[**getModel()**](ModelsApi.md#getModel) | **GET** /models/{model} | Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
+[**getModels()**](ModelsApi.md#getModels) | **GET** /models | Lists the currently available models, and provides basic information about each one such as the owner and availability.
 
 
-## `deleteFile()`
-
-```php
-deleteFile($file_id, $open_ai_organization)
-```
-
-Delete a file.
-
-### Example
+## `deleteModel()`
 
 ```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-$apiInstance = new OpenAI\Client\Api\FilesApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
-);
-$file_id = 56; // int
-$open_ai_organization = 'open_ai_organization_example'; // string
-
-try {
-    $apiInstance->deleteFile($file_id, $open_ai_organization);
-} catch (Exception $e) {
-    echo 'Exception when calling FilesApi->deleteFile: ', $e->getMessage(), PHP_EOL;
-}
+deleteModel($model, $open_ai_organization): \OpenAI\Client\Model\ModelDelete
 ```
 
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **file_id** | **int**|  |
- **open_ai_organization** | **string**|  | [optional]
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `getFileById()`
-
-```php
-getFileById($file_id, $open_ai_organization): \OpenAI\Client\Model\File[]
-```
-
-Returns information about a specific file.
+Delete a fine-tuned model. You must have the Owner role in your organization.
 
 ### Example
 
@@ -86,20 +30,20 @@ $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Aut
 // $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAI\Client\Api\FilesApi(
+$apiInstance = new OpenAI\Client\Api\ModelsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$file_id = 56; // int
+$model = 'model_example'; // string | The model to delete
 $open_ai_organization = 'open_ai_organization_example'; // string
 
 try {
-    $result = $apiInstance->getFileById($file_id, $open_ai_organization);
+    $result = $apiInstance->deleteModel($model, $open_ai_organization);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FilesApi->getFileById: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ModelsApi->deleteModel: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -107,12 +51,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file_id** | **int**|  |
+ **model** | **string**| The model to delete |
  **open_ai_organization** | **string**|  | [optional]
 
 ### Return type
 
-[**\OpenAI\Client\Model\File[]**](../Model/File.md)
+[**\OpenAI\Client\Model\ModelDelete**](../Model/ModelDelete.md)
 
 ### Authorization
 
@@ -127,13 +71,13 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `getFiles()`
+## `getModel()`
 
 ```php
-getFiles($open_ai_organization): \OpenAI\Client\Model\Files[]
+getModel($model, $open_ai_organization): \OpenAI\Client\Model\Model
 ```
 
-Returns a list of files that belong to the user's organization.
+Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
 
 ### Example
 
@@ -148,19 +92,20 @@ $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Aut
 // $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAI\Client\Api\FilesApi(
+$apiInstance = new OpenAI\Client\Api\ModelsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
+$model = 'model_example'; // string | The ID of the model to use for this request
 $open_ai_organization = 'open_ai_organization_example'; // string
 
 try {
-    $result = $apiInstance->getFiles($open_ai_organization);
+    $result = $apiInstance->getModel($model, $open_ai_organization);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FilesApi->getFiles: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ModelsApi->getModel: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -168,11 +113,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **model** | **string**| The ID of the model to use for this request |
  **open_ai_organization** | **string**|  | [optional]
 
 ### Return type
 
-[**\OpenAI\Client\Model\Files[]**](../Model/Files.md)
+[**\OpenAI\Client\Model\Model**](../Model/Model.md)
 
 ### Authorization
 
@@ -187,13 +133,13 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `postFile()`
+## `getModels()`
 
 ```php
-postFile($file, $purpose): \OpenAI\Client\Model\File
+getModels($open_ai_organization): \OpenAI\Client\Model\Model[]
 ```
 
-Upload a file that contains document(s) to be used across various endpoints/features.
+Lists the currently available models, and provides basic information about each one such as the owner and availability.
 
 ### Example
 
@@ -208,20 +154,19 @@ $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Aut
 // $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAI\Client\Api\FilesApi(
+$apiInstance = new OpenAI\Client\Api\ModelsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$file = "/path/to/file.txt"; // \SplFileObject | File to upload.
-$purpose = 'purpose_example'; // string | The intended purpose of the uploaded documents.
+$open_ai_organization = 'open_ai_organization_example'; // string
 
 try {
-    $result = $apiInstance->postFile($file, $purpose);
+    $result = $apiInstance->getModels($open_ai_organization);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FilesApi->postFile: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ModelsApi->getModels: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -229,12 +174,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **\SplFileObject****\SplFileObject**| File to upload. | [optional]
- **purpose** | **string**| The intended purpose of the uploaded documents. | [optional]
+ **open_ai_organization** | **string**|  | [optional]
 
 ### Return type
 
-[**\OpenAI\Client\Model\File**](../Model/File.md)
+[**\OpenAI\Client\Model\Model[]**](../Model/Model.md)
 
 ### Authorization
 
@@ -242,7 +186,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `multipart/form-data`
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

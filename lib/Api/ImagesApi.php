@@ -119,6 +119,7 @@ class ImagesApi
      *
      * Creates an edited or extended image given an original image and a prompt.
      *
+     * @param  string $open_ai_organization open_ai_organization (optional)
      * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
      * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
@@ -130,9 +131,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \OpenAI\Client\Model\Images
      */
-    public function postImagesEdits($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesEdits($open_ai_organization = null, $image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        list($response) = $this->postImagesEditsWithHttpInfo($image, $mark, $n, $size, $response_format, $user);
+        list($response) = $this->postImagesEditsWithHttpInfo($open_ai_organization, $image, $mark, $n, $size, $response_format, $user);
         return $response;
     }
 
@@ -141,6 +142,7 @@ class ImagesApi
      *
      * Creates an edited or extended image given an original image and a prompt.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
      * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
@@ -152,9 +154,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postImagesEditsWithHttpInfo($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesEditsWithHttpInfo($open_ai_organization = null, $image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        $request = $this->postImagesEditsRequest($image, $mark, $n, $size, $response_format, $user);
+        $request = $this->postImagesEditsRequest($open_ai_organization, $image, $mark, $n, $size, $response_format, $user);
 
         try {
             $options = $this->createHttpClientOption();
@@ -232,6 +234,7 @@ class ImagesApi
      *
      * Creates an edited or extended image given an original image and a prompt.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
      * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
@@ -242,9 +245,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesEditsAsync($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesEditsAsync($open_ai_organization = null, $image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        return $this->postImagesEditsAsyncWithHttpInfo($image, $mark, $n, $size, $response_format, $user)
+        return $this->postImagesEditsAsyncWithHttpInfo($open_ai_organization, $image, $mark, $n, $size, $response_format, $user)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -257,6 +260,7 @@ class ImagesApi
      *
      * Creates an edited or extended image given an original image and a prompt.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
      * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
@@ -267,10 +271,10 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesEditsAsyncWithHttpInfo($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesEditsAsyncWithHttpInfo($open_ai_organization = null, $image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
         $returnType = '\OpenAI\Client\Model\Images';
-        $request = $this->postImagesEditsRequest($image, $mark, $n, $size, $response_format, $user);
+        $request = $this->postImagesEditsRequest($open_ai_organization, $image, $mark, $n, $size, $response_format, $user);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -308,6 +312,7 @@ class ImagesApi
     /**
      * Create request for operation 'postImagesEdits'
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image. (optional)
      * @param  \SplFileObject $mark The image to edit. Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
@@ -318,7 +323,7 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postImagesEditsRequest($image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesEditsRequest($open_ai_organization = null, $image = null, $mark = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
 
         $resourcePath = '/images/edits';
@@ -329,6 +334,10 @@ class ImagesApi
         $multipart = false;
 
 
+        // header params
+        if ($open_ai_organization !== null) {
+            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
+        }
 
 
         // form params
@@ -439,15 +448,16 @@ class ImagesApi
      *
      * Given a prompt and/or an input image, the model will generate a new image.
      *
+     * @param  string $open_ai_organization open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload images_generations_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \OpenAI\Client\Model\Images
      */
-    public function postImagesGenerations($images_generations_payload = null)
+    public function postImagesGenerations($open_ai_organization = null, $images_generations_payload = null)
     {
-        list($response) = $this->postImagesGenerationsWithHttpInfo($images_generations_payload);
+        list($response) = $this->postImagesGenerationsWithHttpInfo($open_ai_organization, $images_generations_payload);
         return $response;
     }
 
@@ -456,15 +466,16 @@ class ImagesApi
      *
      * Given a prompt and/or an input image, the model will generate a new image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postImagesGenerationsWithHttpInfo($images_generations_payload = null)
+    public function postImagesGenerationsWithHttpInfo($open_ai_organization = null, $images_generations_payload = null)
     {
-        $request = $this->postImagesGenerationsRequest($images_generations_payload);
+        $request = $this->postImagesGenerationsRequest($open_ai_organization, $images_generations_payload);
 
         try {
             $options = $this->createHttpClientOption();
@@ -542,14 +553,15 @@ class ImagesApi
      *
      * Given a prompt and/or an input image, the model will generate a new image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesGenerationsAsync($images_generations_payload = null)
+    public function postImagesGenerationsAsync($open_ai_organization = null, $images_generations_payload = null)
     {
-        return $this->postImagesGenerationsAsyncWithHttpInfo($images_generations_payload)
+        return $this->postImagesGenerationsAsyncWithHttpInfo($open_ai_organization, $images_generations_payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -562,15 +574,16 @@ class ImagesApi
      *
      * Given a prompt and/or an input image, the model will generate a new image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesGenerationsAsyncWithHttpInfo($images_generations_payload = null)
+    public function postImagesGenerationsAsyncWithHttpInfo($open_ai_organization = null, $images_generations_payload = null)
     {
         $returnType = '\OpenAI\Client\Model\Images';
-        $request = $this->postImagesGenerationsRequest($images_generations_payload);
+        $request = $this->postImagesGenerationsRequest($open_ai_organization, $images_generations_payload);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -608,12 +621,13 @@ class ImagesApi
     /**
      * Create request for operation 'postImagesGenerations'
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\ImagesGenerationsPayload $images_generations_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postImagesGenerationsRequest($images_generations_payload = null)
+    public function postImagesGenerationsRequest($open_ai_organization = null, $images_generations_payload = null)
     {
 
         $resourcePath = '/images/generations';
@@ -624,6 +638,10 @@ class ImagesApi
         $multipart = false;
 
 
+        // header params
+        if ($open_ai_organization !== null) {
+            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
+        }
 
 
 
@@ -700,6 +718,7 @@ class ImagesApi
      *
      * Creates a variation of a given image.
      *
+     * @param  string $open_ai_organization open_ai_organization (optional)
      * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
      * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
@@ -710,9 +729,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \OpenAI\Client\Model\Images
      */
-    public function postImagesVariations($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesVariations($open_ai_organization = null, $image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        list($response) = $this->postImagesVariationsWithHttpInfo($image, $n, $size, $response_format, $user);
+        list($response) = $this->postImagesVariationsWithHttpInfo($open_ai_organization, $image, $n, $size, $response_format, $user);
         return $response;
     }
 
@@ -721,6 +740,7 @@ class ImagesApi
      *
      * Creates a variation of a given image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
      * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
@@ -731,9 +751,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return array of \OpenAI\Client\Model\Images, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postImagesVariationsWithHttpInfo($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesVariationsWithHttpInfo($open_ai_organization = null, $image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        $request = $this->postImagesVariationsRequest($image, $n, $size, $response_format, $user);
+        $request = $this->postImagesVariationsRequest($open_ai_organization, $image, $n, $size, $response_format, $user);
 
         try {
             $options = $this->createHttpClientOption();
@@ -811,6 +831,7 @@ class ImagesApi
      *
      * Creates a variation of a given image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
      * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
@@ -820,9 +841,9 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesVariationsAsync($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesVariationsAsync($open_ai_organization = null, $image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
-        return $this->postImagesVariationsAsyncWithHttpInfo($image, $n, $size, $response_format, $user)
+        return $this->postImagesVariationsAsyncWithHttpInfo($open_ai_organization, $image, $n, $size, $response_format, $user)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -835,6 +856,7 @@ class ImagesApi
      *
      * Creates a variation of a given image.
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
      * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
@@ -844,10 +866,10 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postImagesVariationsAsyncWithHttpInfo($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesVariationsAsyncWithHttpInfo($open_ai_organization = null, $image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
         $returnType = '\OpenAI\Client\Model\Images';
-        $request = $this->postImagesVariationsRequest($image, $n, $size, $response_format, $user);
+        $request = $this->postImagesVariationsRequest($open_ai_organization, $image, $n, $size, $response_format, $user);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -885,6 +907,7 @@ class ImagesApi
     /**
      * Create request for operation 'postImagesVariations'
      *
+     * @param  string $open_ai_organization (optional)
      * @param  \SplFileObject $image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square. (optional)
      * @param  int $n The number of images to generate. Must be between 1 and 10. (optional, default to 1)
      * @param  string $size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. (optional, default to '1024x1024')
@@ -894,7 +917,7 @@ class ImagesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postImagesVariationsRequest($image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
+    public function postImagesVariationsRequest($open_ai_organization = null, $image = null, $n = 1, $size = '1024x1024', $response_format = 'url', $user = 'null')
     {
 
         $resourcePath = '/images/variations';
@@ -905,6 +928,10 @@ class ImagesApi
         $multipart = false;
 
 
+        // header params
+        if ($open_ai_organization !== null) {
+            $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
+        }
 
 
         // form params

@@ -1,19 +1,19 @@
-# OpenAI\Client\SearchApi
+# OpenAI\Client\ModerationsApi
 
 All URIs are relative to https://api.openai.com/v1.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**postSearch()**](SearchApi.md#postSearch) | **POST** /search | The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+[**postModerations()**](ModerationsApi.md#postModerations) | **POST** /moderations | Classifies if text violates OpenAI&#39;s Content Policy
 
 
-## `postSearch()`
+## `postModerations()`
 
 ```php
-postSearch($engine_id, $open_ai_organization, $search_payload): \OpenAI\Client\Model\Search
+postModerations($open_ai_organization, $moderations_payload): \OpenAI\Client\Model\Moderations
 ```
 
-The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
+Classifies if text violates OpenAI's Content Policy
 
 ### Example
 
@@ -28,21 +28,20 @@ $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKey('Aut
 // $config = OpenAI\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
-$apiInstance = new OpenAI\Client\Api\SearchApi(
+$apiInstance = new OpenAI\Client\Api\ModerationsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$engine_id = 56; // int | The ID of the engine to use for this request
 $open_ai_organization = 'open_ai_organization_example'; // string
-$search_payload = new \OpenAI\Client\Model\SearchPayload(); // \OpenAI\Client\Model\SearchPayload
+$moderations_payload = new \OpenAI\Client\Model\ModerationsPayload(); // \OpenAI\Client\Model\ModerationsPayload
 
 try {
-    $result = $apiInstance->postSearch($engine_id, $open_ai_organization, $search_payload);
+    $result = $apiInstance->postModerations($open_ai_organization, $moderations_payload);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling SearchApi->postSearch: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ModerationsApi->postModerations: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -50,13 +49,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **engine_id** | **int**| The ID of the engine to use for this request |
  **open_ai_organization** | **string**|  | [optional]
- **search_payload** | [**\OpenAI\Client\Model\SearchPayload**](../Model/SearchPayload.md)|  | [optional]
+ **moderations_payload** | [**\OpenAI\Client\Model\ModerationsPayload**](../Model/ModerationsPayload.md)|  | [optional]
 
 ### Return type
 
-[**\OpenAI\Client\Model\Search**](../Model/Search.md)
+[**\OpenAI\Client\Model\Moderations**](../Model/Moderations.md)
 
 ### Authorization
 

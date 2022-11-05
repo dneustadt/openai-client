@@ -1,6 +1,6 @@
 <?php
 /**
- * FilesApi
+ * ModelsApi
  * PHP version 7.2
  *
  * @category Class
@@ -39,14 +39,14 @@ use OpenAI\Client\HeaderSelector;
 use OpenAI\Client\ObjectSerializer;
 
 /**
- * FilesApi Class Doc Comment
+ * ModelsApi Class Doc Comment
  *
  * @category Class
  * @package  OpenAI\Client
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class FilesApi
+class ModelsApi
 {
     /**
      * @var ClientInterface
@@ -115,37 +115,38 @@ class FilesApi
     }
 
     /**
-     * Operation deleteFile
+     * Operation deleteModel
      *
-     * Delete a file.
+     * Delete a fine-tuned model. You must have the Owner role in your organization.
      *
-     * @param  int $file_id file_id (required)
+     * @param  string $model The model to delete (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \OpenAI\Client\Model\ModelDelete
      */
-    public function deleteFile($file_id, $open_ai_organization = null)
+    public function deleteModel($model, $open_ai_organization = null)
     {
-        $this->deleteFileWithHttpInfo($file_id, $open_ai_organization);
+        list($response) = $this->deleteModelWithHttpInfo($model, $open_ai_organization);
+        return $response;
     }
 
     /**
-     * Operation deleteFileWithHttpInfo
+     * Operation deleteModelWithHttpInfo
      *
-     * Delete a file.
+     * Delete a fine-tuned model. You must have the Owner role in your organization.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The model to delete (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\ModelDelete, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteFileWithHttpInfo($file_id, $open_ai_organization = null)
+    public function deleteModelWithHttpInfo($model, $open_ai_organization = null)
     {
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
+        $request = $this->deleteModelRequest($model, $open_ai_organization);
 
         try {
             $options = $this->createHttpClientOption();
@@ -175,29 +176,63 @@ class FilesApi
                 );
             }
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    if ('\OpenAI\Client\Model\ModelDelete' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\ModelDelete', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\OpenAI\Client\Model\ModelDelete';
+            if ($returnType === '\SplFileObject') {
+                $content = $response->getBody(); //stream goes to serializer
+            } else {
+                $content = (string) $response->getBody();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\OpenAI\Client\Model\ModelDelete',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
             }
             throw $e;
         }
     }
 
     /**
-     * Operation deleteFileAsync
+     * Operation deleteModelAsync
      *
-     * Delete a file.
+     * Delete a fine-tuned model. You must have the Owner role in your organization.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The model to delete (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteFileAsync($file_id, $open_ai_organization = null)
+    public function deleteModelAsync($model, $open_ai_organization = null)
     {
-        return $this->deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization)
+        return $this->deleteModelAsyncWithHttpInfo($model, $open_ai_organization)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -206,26 +241,36 @@ class FilesApi
     }
 
     /**
-     * Operation deleteFileAsyncWithHttpInfo
+     * Operation deleteModelAsyncWithHttpInfo
      *
-     * Delete a file.
+     * Delete a fine-tuned model. You must have the Owner role in your organization.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The model to delete (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteFileAsyncWithHttpInfo($file_id, $open_ai_organization = null)
+    public function deleteModelAsyncWithHttpInfo($model, $open_ai_organization = null)
     {
-        $returnType = '';
-        $request = $this->deleteFileRequest($file_id, $open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\ModelDelete';
+        $request = $this->deleteModelRequest($model, $open_ai_organization);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -245,24 +290,24 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'deleteFile'
+     * Create request for operation 'deleteModel'
      *
-     * @param  int $file_id (required)
+     * @param  string $model The model to delete (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteFileRequest($file_id, $open_ai_organization = null)
+    public function deleteModelRequest($model, $open_ai_organization = null)
     {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
+        // verify the required parameter 'model' is set
+        if ($model === null || (is_array($model) && count($model) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling deleteFile'
+                'Missing the required parameter $model when calling deleteModel'
             );
         }
 
-        $resourcePath = '/files/{file_id}';
+        $resourcePath = '/models/{model}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -276,10 +321,10 @@ class FilesApi
         }
 
         // path params
-        if ($file_id !== null) {
+        if ($model !== null) {
             $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
+                '{' . 'model' . '}',
+                ObjectSerializer::toPathValue($model),
                 $resourcePath
             );
         }
@@ -287,11 +332,11 @@ class FilesApi
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
+                ['application/json'],
                 []
             );
         }
@@ -321,6 +366,11 @@ class FilesApi
             }
         }
 
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -343,38 +393,38 @@ class FilesApi
     }
 
     /**
-     * Operation getFileById
+     * Operation getModel
      *
-     * Returns information about a specific file.
+     * Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
      *
-     * @param  int $file_id file_id (required)
+     * @param  string $model The ID of the model to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File[]
+     * @return \OpenAI\Client\Model\Model
      */
-    public function getFileById($file_id, $open_ai_organization = null)
+    public function getModel($model, $open_ai_organization = null)
     {
-        list($response) = $this->getFileByIdWithHttpInfo($file_id, $open_ai_organization);
+        list($response) = $this->getModelWithHttpInfo($model, $open_ai_organization);
         return $response;
     }
 
     /**
-     * Operation getFileByIdWithHttpInfo
+     * Operation getModelWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The ID of the model to use for this request (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Model, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getFileByIdWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getModelWithHttpInfo($model, $open_ai_organization = null)
     {
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $request = $this->getModelRequest($model, $open_ai_organization);
 
         try {
             $options = $this->createHttpClientOption();
@@ -406,20 +456,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\File[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Model' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Model', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\File[]';
+            $returnType = '\OpenAI\Client\Model\Model';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -437,7 +487,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File[]',
+                        '\OpenAI\Client\Model\Model',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -448,19 +498,19 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsync
+     * Operation getModelAsync
      *
-     * Returns information about a specific file.
+     * Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The ID of the model to use for this request (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsync($file_id, $open_ai_organization = null)
+    public function getModelAsync($model, $open_ai_organization = null)
     {
-        return $this->getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization)
+        return $this->getModelAsyncWithHttpInfo($model, $open_ai_organization)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -469,20 +519,20 @@ class FilesApi
     }
 
     /**
-     * Operation getFileByIdAsyncWithHttpInfo
+     * Operation getModelAsyncWithHttpInfo
      *
-     * Returns information about a specific file.
+     * Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
      *
-     * @param  int $file_id (required)
+     * @param  string $model The ID of the model to use for this request (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFileByIdAsyncWithHttpInfo($file_id, $open_ai_organization = null)
+    public function getModelAsyncWithHttpInfo($model, $open_ai_organization = null)
     {
-        $returnType = '\OpenAI\Client\Model\File[]';
-        $request = $this->getFileByIdRequest($file_id, $open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\Model';
+        $request = $this->getModelRequest($model, $open_ai_organization);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -518,24 +568,24 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'getFileById'
+     * Create request for operation 'getModel'
      *
-     * @param  int $file_id (required)
+     * @param  string $model The ID of the model to use for this request (required)
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getFileByIdRequest($file_id, $open_ai_organization = null)
+    public function getModelRequest($model, $open_ai_organization = null)
     {
-        // verify the required parameter 'file_id' is set
-        if ($file_id === null || (is_array($file_id) && count($file_id) === 0)) {
+        // verify the required parameter 'model' is set
+        if ($model === null || (is_array($model) && count($model) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $file_id when calling getFileById'
+                'Missing the required parameter $model when calling getModel'
             );
         }
 
-        $resourcePath = '/files/{file_id}';
+        $resourcePath = '/models/{model}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -549,10 +599,10 @@ class FilesApi
         }
 
         // path params
-        if ($file_id !== null) {
+        if ($model !== null) {
             $resourcePath = str_replace(
-                '{' . 'file_id' . '}',
-                ObjectSerializer::toPathValue($file_id),
+                '{' . 'model' . '}',
+                ObjectSerializer::toPathValue($model),
                 $resourcePath
             );
         }
@@ -621,36 +671,36 @@ class FilesApi
     }
 
     /**
-     * Operation getFiles
+     * Operation getModels
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Lists the currently available models, and provides basic information about each one such as the owner and availability.
      *
      * @param  string $open_ai_organization open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\Files[]
+     * @return \OpenAI\Client\Model\Model[]
      */
-    public function getFiles($open_ai_organization = null)
+    public function getModels($open_ai_organization = null)
     {
-        list($response) = $this->getFilesWithHttpInfo($open_ai_organization);
+        list($response) = $this->getModelsWithHttpInfo($open_ai_organization);
         return $response;
     }
 
     /**
-     * Operation getFilesWithHttpInfo
+     * Operation getModelsWithHttpInfo
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Lists the currently available models, and provides basic information about each one such as the owner and availability.
      *
      * @param  string $open_ai_organization (optional)
      *
      * @throws \OpenAI\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\Files[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \OpenAI\Client\Model\Model[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function getFilesWithHttpInfo($open_ai_organization = null)
+    public function getModelsWithHttpInfo($open_ai_organization = null)
     {
-        $request = $this->getFilesRequest($open_ai_organization);
+        $request = $this->getModelsRequest($open_ai_organization);
 
         try {
             $options = $this->createHttpClientOption();
@@ -682,20 +732,20 @@ class FilesApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\OpenAI\Client\Model\Files[]' === '\SplFileObject') {
+                    if ('\OpenAI\Client\Model\Model[]' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Files[]', []),
+                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\Model[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\OpenAI\Client\Model\Files[]';
+            $returnType = '\OpenAI\Client\Model\Model[]';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -713,7 +763,7 @@ class FilesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAI\Client\Model\Files[]',
+                        '\OpenAI\Client\Model\Model[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -724,18 +774,18 @@ class FilesApi
     }
 
     /**
-     * Operation getFilesAsync
+     * Operation getModelsAsync
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Lists the currently available models, and provides basic information about each one such as the owner and availability.
      *
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFilesAsync($open_ai_organization = null)
+    public function getModelsAsync($open_ai_organization = null)
     {
-        return $this->getFilesAsyncWithHttpInfo($open_ai_organization)
+        return $this->getModelsAsyncWithHttpInfo($open_ai_organization)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -744,19 +794,19 @@ class FilesApi
     }
 
     /**
-     * Operation getFilesAsyncWithHttpInfo
+     * Operation getModelsAsyncWithHttpInfo
      *
-     * Returns a list of files that belong to the user&#39;s organization.
+     * Lists the currently available models, and provides basic information about each one such as the owner and availability.
      *
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getFilesAsyncWithHttpInfo($open_ai_organization = null)
+    public function getModelsAsyncWithHttpInfo($open_ai_organization = null)
     {
-        $returnType = '\OpenAI\Client\Model\Files[]';
-        $request = $this->getFilesRequest($open_ai_organization);
+        $returnType = '\OpenAI\Client\Model\Model[]';
+        $request = $this->getModelsRequest($open_ai_organization);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -792,17 +842,17 @@ class FilesApi
     }
 
     /**
-     * Create request for operation 'getFiles'
+     * Create request for operation 'getModels'
      *
      * @param  string $open_ai_organization (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getFilesRequest($open_ai_organization = null)
+    public function getModelsRequest($open_ai_organization = null)
     {
 
-        $resourcePath = '/files';
+        $resourcePath = '/models';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -873,282 +923,6 @@ class FilesApi
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation postFile
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \OpenAI\Client\Model\File
-     */
-    public function postFile($file = null, $purpose = null)
-    {
-        list($response) = $this->postFileWithHttpInfo($file, $purpose);
-        return $response;
-    }
-
-    /**
-     * Operation postFileWithHttpInfo
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \OpenAI\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \OpenAI\Client\Model\File, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function postFileWithHttpInfo($file = null, $purpose = null)
-    {
-        $request = $this->postFileRequest($file, $purpose);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('\OpenAI\Client\Model\File' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\OpenAI\Client\Model\File', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\OpenAI\Client\Model\File';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\OpenAI\Client\Model\File',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation postFileAsync
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postFileAsync($file = null, $purpose = null)
-    {
-        return $this->postFileAsyncWithHttpInfo($file, $purpose)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation postFileAsyncWithHttpInfo
-     *
-     * Upload a file that contains document(s) to be used across various endpoints/features.
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postFileAsyncWithHttpInfo($file = null, $purpose = null)
-    {
-        $returnType = '\OpenAI\Client\Model\File';
-        $request = $this->postFileRequest($file, $purpose);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'postFile'
-     *
-     * @param  \SplFileObject $file File to upload. (optional)
-     * @param  string $purpose The intended purpose of the uploaded documents. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function postFileRequest($file = null, $purpose = null)
-    {
-
-        $resourcePath = '/files';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-        // form params
-        if ($file !== null) {
-            $multipart = true;
-            $formParams['file'] = [];
-            $paramFiles = is_array($file) ? $file : [$file];
-            foreach ($paramFiles as $paramFile) {
-                $formParams['file'][] = \GuzzleHttp\Psr7\try_fopen(
-                    ObjectSerializer::toFormValue($paramFile),
-                    'rb'
-                );
-            }
-        }
-        // form params
-        if ($purpose !== null) {
-            $formParams['purpose'] = ObjectSerializer::toFormValue($purpose);
-        }
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['multipart/form-data']
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

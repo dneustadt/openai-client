@@ -13,7 +13,7 @@ tags:
   - name: OpenAI
     description: OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general intelligence benefits all of humanity.
 paths:
-  /engines:
+  '/engines':
     get:
       tags:
         - engines
@@ -156,8 +156,9 @@ paths:
                   description: Modify the likelihood of specified tokens appearing in the completion.
                   type: object
                   default: null
-  '/engines/{engine_id}/search':
+  '/search':
     post:
+      deprecated: true
       tags:
         - search
       summary: The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.
@@ -209,8 +210,9 @@ paths:
                   description: A special boolean flag for showing metadata. If set to true, each document entry in the returned JSON will contain a "metadata" field. This flag only takes effect when file is set.
                   type: boolean
                   default: false
-  /classifications:
+  '/classifications':
     post:
+      deprecated: true
       tags:
         - classification
       summary: The endpoint first searches over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the completions endpoint.
@@ -288,8 +290,9 @@ paths:
                   description: If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object ID. Currently we support completion and file objects for expansion.
                   type: array
                   default: []
-  /answers:
+  '/answers':
     post:
+      deprecated: true
       tags:
         - answer
       summary: Answers the specified question using the provided documents and examples.
@@ -381,7 +384,7 @@ paths:
                   description: If an object name is in the list, we provide the full information of the object; otherwise, we only provide the object ID. Currently we support completion and file objects for expansion.
                   type: array
                   default: [ ]
-  /files:
+  '/files':
     get:
       tags:
         - files
@@ -492,6 +495,12 @@ paths:
       summary: Given a prompt and/or an input image, the model will generate a new image.
       description: ''
       operationId: postImagesGenerations
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
       responses:
         '200':
           description: successful operation
@@ -535,6 +544,12 @@ paths:
       summary: Creates an edited or extended image given an original image and a prompt.
       description: ''
       operationId: postImagesEdits
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
       responses:
         '200':
           description: successful operation
@@ -584,6 +599,12 @@ paths:
       summary: Creates a variation of a given image.
       description: ''
       operationId: postImagesVariations
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
       responses:
         '200':
           description: successful operation
@@ -621,6 +642,345 @@ paths:
                   description: A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
                   type: string
                   default: null
+  '/models':
+    get:
+      tags:
+        - models
+      summary: Lists the currently available models, and provides basic information about each one such as the owner and availability.
+      description: ''
+      operationId: getModels
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Model'
+      security:
+        - api_key: []
+  '/models/{model}':
+    get:
+      tags:
+        - models
+      summary: Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
+      description: ''
+      operationId: getModel
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: model
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The ID of the model to use for this request
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - models
+      summary: Delete a fine-tuned model. You must have the Owner role in your organization.
+      description: ''
+      operationId: deleteModel
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: model
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The model to delete
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDelete'
+      security:
+        - api_key: []
+  '/embeddings':
+    post:
+      tags:
+        - embeddings
+      summary: Creates an embedding vector representing the input text.
+      description: ''
+      operationId: postEmbeddings
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Embeddings'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: EmbeddingsPayload
+              type: object
+              properties:
+                model:
+                  description: ID of the model to use. You can use the List models API to see all of your available models, or see our Model overview for descriptions of them.
+                  required: true
+                  type: string
+                input:
+                  description: Input text to get embeddings for, encoded as a string or array of tokens. To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays. Each input must not exceed 2048 tokens in length.
+                  required: true
+                  type: string
+                user:
+                  description: A unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
+                  type: string
+                  default: null
+  '/moderations':
+    post:
+      tags:
+        - moderations
+      summary: Classifies if text violates OpenAI's Content Policy
+      description: ''
+      operationId: postModerations
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Moderations'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: ModerationsPayload
+              type: object
+              properties:
+                input:
+                  description: The input text to classify
+                  required: true
+                  type: string
+                model:
+                  description: Two content moderations models are available - text-moderation-stable and text-moderation-latest.
+                  type: string
+                  default: 'text-moderation-latest'
+  '/fine-tunes':
+    get:
+      tags:
+        - fine-tunes
+      summary: List your organization's fine-tuning jobs
+      description: ''
+      operationId: getFineTunes
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTunes'
+      security:
+        - api_key: [ ]
+    post:
+      tags:
+        - fine-tunes
+      summary: Creates a job that fine-tunes a specified model from a given dataset.
+      description: ''
+      operationId: postFineTunes
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTune'
+      security:
+        - api_key: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: FineTunesPayload
+              type: object
+              properties:
+                training_file:
+                  description: The ID of an uploaded file that contains training data.
+                  required: true
+                  type: string
+                validation_file:
+                  description: The ID of an uploaded file that contains validation data.
+                  type: string
+                model:
+                  description: The name of the base model to fine-tune. You can select one of "ada", "babbage", "curie", "davinci", or a fine-tuned model created after 2022-04-21. To learn more about these models, see the Models documentation.
+                  type: string
+                  default: 'curie'
+                n_epochs:
+                  description: The number of epochs to train the model for. An epoch refers to one full cycle through the training dataset.
+                  type: integer
+                  default: 4
+                batch_size:
+                  description: The batch size to use for training. The batch size is the number of training examples used to train a single forward and backward pass.
+                  type: integer
+                  default: null
+                learning_rate_multiplier:
+                  description: The learning rate multiplier to use for training. The fine-tuning learning rate is the original learning rate used for pretraining multiplied by this value.
+                  type: number
+                  default: null
+                prompt_loss_weight:
+                  description: The weight to use for loss on the prompt tokens. This controls how much the model tries to learn to generate the prompt (as compared to the completion which always has a weight of 1.0), and can add a stabilizing effect to training when completions are short.
+                  type: number
+                  default: 0.01
+                compute_classification_metrics:
+                  description: If set, we calculate classification-specific metrics such as accuracy and F-1 score using the validation set at the end of every epoch. These metrics can be viewed in the results file.
+                  type: boolean
+                  default: false
+                classification_n_classes:
+                  description: The number of classes in a classification task.
+                  type: integer
+                  default: null
+                classification_positive_class:
+                  description: The positive class in binary classification.
+                  type: string
+                  default: null
+                classification_betas:
+                  description: If this is provided, we calculate F-beta scores at the specified beta values. The F-beta score is a generalization of F-1 score. This is only used for binary classification.
+                  type: array
+                  default: null
+                suffix:
+                  description: A string of up to 40 characters that will be added to your fine-tuned model name.
+                  type: string
+                  default: null
+  '/fine-tunes/{fine_tune_id}':
+    get:
+      tags:
+        - fine-tunes
+      summary: Gets info about the fine-tune job.
+      description: ''
+      operationId: getFineTune
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: fine_tune_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The ID of the fine-tune job
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTune'
+  '/fine-tunes/{fine_tune_id}/cancel':
+    post:
+      tags:
+        - fine-tunes
+      summary: Immediately cancel a fine-tune job.
+      description: ''
+      operationId: postFineTuneCancel
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: fine_tune_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The ID of the fine-tune job to cancel
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTune'
+      security:
+        - api_key: []
+  '/fine-tunes/{fine_tune_id}/events':
+    get:
+      tags:
+        - fine-tunes
+      summary: Get fine-grained status updates for a fine-tune job.
+      description: ''
+      operationId: getFineTuneEvents
+      parameters:
+        - name: OpenAI-Organization
+          in: header
+          schema:
+            type: string
+          required: false
+        - name: fine_tune_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The ID of the fine-tune job to get events for.
+        - name: stream
+          in: query
+          schema:
+            type: boolean
+          description: Whether to stream events for the fine-tune job. If set to true, events will be sent as data-only server-sent events as they become available.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FineTuneEvents'
 externalDocs:
   description: Find out more about OpenAI API
   url: 'https://beta.openai.com/docs/api-reference/files/retrieve'
@@ -743,3 +1103,91 @@ components:
           type: array
           items:
             type: object
+    Model:
+      title: Model
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        owned_by:
+          type: string
+        permission:
+          type: array
+    ModelDelete:
+      title: ModelDelete
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
+    Embeddings:
+      title: Embeddings
+      type: object
+      properties:
+        object:
+          type: string
+        data:
+          type: array
+        usage:
+          type: object
+    Moderations:
+      title: Moderations
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        result:
+          type: array
+    FineTunes:
+      title: FineTunes
+      type: object
+      properties:
+        object:
+          type: string
+        data:
+          type: array
+    FineTune:
+      title: FineTune
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        model:
+          type: string
+        created_at:
+          type: integer
+        events:
+          type: array
+        fine_tuned_model:
+          type: string
+        hyperparams:
+          type: object
+        organization_id:
+          type: string
+        result_files:
+          type: array
+        status:
+          type: string
+        validation_files:
+          type: array
+        training_files:
+          type: array
+        updated_at:
+          type: integer
+    FineTuneEvents:
+      title: FineTuneEvents
+      type: object
+      properties:
+        object:
+          type: string
+        data:
+          type: array
