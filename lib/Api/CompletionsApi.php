@@ -119,7 +119,6 @@ class CompletionsApi
      *
      * Creates a new completion for the provided prompt and parameters
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload completion_payload (optional)
      *
@@ -127,9 +126,9 @@ class CompletionsApi
      * @throws \InvalidArgumentException
      * @return \OpenAI\Client\Model\Completion
      */
-    public function postCompletions($engine_id, $open_ai_organization = null, $completion_payload = null)
+    public function postCompletions($open_ai_organization = null, $completion_payload = null)
     {
-        list($response) = $this->postCompletionsWithHttpInfo($engine_id, $open_ai_organization, $completion_payload);
+        list($response) = $this->postCompletionsWithHttpInfo($open_ai_organization, $completion_payload);
         return $response;
     }
 
@@ -138,7 +137,6 @@ class CompletionsApi
      *
      * Creates a new completion for the provided prompt and parameters
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
@@ -146,9 +144,9 @@ class CompletionsApi
      * @throws \InvalidArgumentException
      * @return array of \OpenAI\Client\Model\Completion, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postCompletionsWithHttpInfo($engine_id, $open_ai_organization = null, $completion_payload = null)
+    public function postCompletionsWithHttpInfo($open_ai_organization = null, $completion_payload = null)
     {
-        $request = $this->postCompletionsRequest($engine_id, $open_ai_organization, $completion_payload);
+        $request = $this->postCompletionsRequest($open_ai_organization, $completion_payload);
 
         try {
             $options = $this->createHttpClientOption();
@@ -226,16 +224,15 @@ class CompletionsApi
      *
      * Creates a new completion for the provided prompt and parameters
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postCompletionsAsync($engine_id, $open_ai_organization = null, $completion_payload = null)
+    public function postCompletionsAsync($open_ai_organization = null, $completion_payload = null)
     {
-        return $this->postCompletionsAsyncWithHttpInfo($engine_id, $open_ai_organization, $completion_payload)
+        return $this->postCompletionsAsyncWithHttpInfo($open_ai_organization, $completion_payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -248,17 +245,16 @@ class CompletionsApi
      *
      * Creates a new completion for the provided prompt and parameters
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postCompletionsAsyncWithHttpInfo($engine_id, $open_ai_organization = null, $completion_payload = null)
+    public function postCompletionsAsyncWithHttpInfo($open_ai_organization = null, $completion_payload = null)
     {
         $returnType = '\OpenAI\Client\Model\Completion';
-        $request = $this->postCompletionsRequest($engine_id, $open_ai_organization, $completion_payload);
+        $request = $this->postCompletionsRequest($open_ai_organization, $completion_payload);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -296,23 +292,16 @@ class CompletionsApi
     /**
      * Create request for operation 'postCompletions'
      *
-     * @param  int $engine_id The ID of the engine to use for this request (required)
      * @param  string $open_ai_organization (optional)
      * @param  \OpenAI\Client\Model\CompletionPayload $completion_payload (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function postCompletionsRequest($engine_id, $open_ai_organization = null, $completion_payload = null)
+    public function postCompletionsRequest($open_ai_organization = null, $completion_payload = null)
     {
-        // verify the required parameter 'engine_id' is set
-        if ($engine_id === null || (is_array($engine_id) && count($engine_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $engine_id when calling postCompletions'
-            );
-        }
 
-        $resourcePath = '/engines/{engine_id}/completions';
+        $resourcePath = '/completions';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -325,14 +314,6 @@ class CompletionsApi
             $headerParams['OpenAI-Organization'] = ObjectSerializer::toHeaderValue($open_ai_organization);
         }
 
-        // path params
-        if ($engine_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'engine_id' . '}',
-                ObjectSerializer::toPathValue($engine_id),
-                $resourcePath
-            );
-        }
 
 
         if ($multipart) {

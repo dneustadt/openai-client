@@ -59,6 +59,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
+        'model' => 'string',
         'prompt' => 'string|array',
         'max_tokens' => 'int',
         'temperature' => 'float',
@@ -82,6 +83,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'model' => null,
         'prompt' => null,
         'max_tokens' => null,
         'temperature' => null,
@@ -124,6 +126,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $attributeMap = [
+        'model' => 'model',
         'prompt' => 'prompt',
         'max_tokens' => 'max_tokens',
         'temperature' => 'temperature',
@@ -145,6 +148,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $setters = [
+        'model' => 'setModel',
         'prompt' => 'setPrompt',
         'max_tokens' => 'setMaxTokens',
         'temperature' => 'setTemperature',
@@ -166,6 +170,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $getters = [
+        'model' => 'getModel',
         'prompt' => 'getPrompt',
         'max_tokens' => 'getMaxTokens',
         'temperature' => 'getTemperature',
@@ -238,6 +243,7 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function __construct(array $data = null)
     {
+        $this->container['model'] = $data['model'] ?? null;
         $this->container['prompt'] = $data['prompt'] ?? null;
         $this->container['max_tokens'] = $data['max_tokens'] ?? 16;
         $this->container['temperature'] = $data['temperature'] ?? 1;
@@ -276,6 +282,30 @@ class CompletionPayload implements ModelInterface, ArrayAccess, \JsonSerializabl
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets model
+     *
+     * @return string|null
+     */
+    public function getModel()
+    {
+        return $this->container['model'];
+    }
+
+    /**
+     * Sets model
+     *
+     * @param string|null $model ID of the model to use.
+     *
+     * @return self
+     */
+    public function setModel($model)
+    {
+        $this->container['model'] = $model;
+
+        return $this;
+    }
 
     /**
      * Gets prompt

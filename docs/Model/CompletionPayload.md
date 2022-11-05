@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**model** | **string** | ID of the model to use. | [optional]
 **prompt** | **string &#124; array** | The prompt(s) to generate completions for, encoded as a string, a list of strings, or a list of token lists. | [optional]
 **max_tokens** | **int** | The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion. | [optional] [default to 16]
 **temperature** | **float** | The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion. | [optional] [default to 1]

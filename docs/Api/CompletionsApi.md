@@ -4,13 +4,13 @@ All URIs are relative to https://api.openai.com/v1.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**postCompletions()**](CompletionsApi.md#postCompletions) | **POST** /engines/{engine_id}/completions | Creates a new completion for the provided prompt and parameters
+[**postCompletions()**](CompletionsApi.md#postCompletions) | **POST** /completions | Creates a new completion for the provided prompt and parameters
 
 
 ## `postCompletions()`
 
 ```php
-postCompletions($engine_id, $open_ai_organization, $completion_payload): \OpenAI\Client\Model\Completion
+postCompletions($open_ai_organization, $completion_payload): \OpenAI\Client\Model\Completion
 ```
 
 Creates a new completion for the provided prompt and parameters
@@ -34,12 +34,11 @@ $apiInstance = new OpenAI\Client\Api\CompletionsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$engine_id = 56; // int | The ID of the engine to use for this request
 $open_ai_organization = 'open_ai_organization_example'; // string
 $completion_payload = new \OpenAI\Client\Model\CompletionPayload(); // \OpenAI\Client\Model\CompletionPayload
 
 try {
-    $result = $apiInstance->postCompletions($engine_id, $open_ai_organization, $completion_payload);
+    $result = $apiInstance->postCompletions($open_ai_organization, $completion_payload);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CompletionsApi->postCompletions: ', $e->getMessage(), PHP_EOL;
@@ -50,7 +49,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **engine_id** | **int**| The ID of the engine to use for this request |
  **open_ai_organization** | **string**|  | [optional]
  **completion_payload** | [**\OpenAI\Client\Model\CompletionPayload**](../Model/CompletionPayload.md)|  | [optional]
 

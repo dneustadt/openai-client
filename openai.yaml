@@ -65,7 +65,7 @@ paths:
                 $ref: '#/components/schemas/Engine'
       security:
         - api_key: []
-  '/engines/{engine_id}/completions':
+  '/completions':
     post:
       tags:
         - completions
@@ -78,12 +78,6 @@ paths:
           schema:
             type: string
           required: false
-        - name: engine_id
-          in: path
-          schema:
-            type: integer
-          required: true
-          description: The ID of the engine to use for this request
       responses:
         '200':
           description: successful operation
@@ -100,6 +94,10 @@ paths:
               title: CompletionPayload
               type: object
               properties:
+                model:
+                  description: ID of the model to use.
+                  required: true
+                  type: string
                 prompt:
                   description: The prompt(s) to generate completions for, encoded as a string, a list of strings, or a list of token lists.
                   required: true
