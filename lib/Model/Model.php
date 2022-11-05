@@ -62,7 +62,7 @@ class Model implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'string',
         'object' => 'string',
         'owned_by' => 'string',
-        'permission' => 'array'
+        'permission' => 'object'
     ];
 
     /**
@@ -298,7 +298,7 @@ class Model implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets permission
      *
-     * @return array|null
+     * @return object|null
      */
     public function getPermission()
     {
@@ -308,7 +308,7 @@ class Model implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets permission
      *
-     * @param array|null $permission permission
+     * @param object|null $permission permission
      *
      * @return self
      */

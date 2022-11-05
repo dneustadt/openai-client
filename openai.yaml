@@ -1126,7 +1126,7 @@ components:
         owned_by:
           type: string
         permission:
-          type: array
+          type: object
     ModelDelete:
       title: ModelDelete
       type: object
@@ -1194,11 +1194,11 @@ components:
         organization_id:
           type: string
         result_files:
-          type: array
+          type: object
         status:
           type: string
         validation_files:
-          type: array
+          type: object
         training_files:
           type: array
           items:
